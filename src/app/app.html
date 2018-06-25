@@ -1,0 +1,43 @@
+<ion-menu [content]="content">
+  <ion-header>
+      <ion-toolbar no-border-top>
+        <ion-title>Menu</ion-title>
+        <ion-buttons start>
+            <button ion-button menuClose style="float:right"><ion-icon name="close"></ion-icon></button>
+          </ion-buttons>  
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+      <ion-segment id="btn-grp">
+          <ion-segment-button style="border:1px solid black;font-size:12px;" title="School Branch" (click)="presentPopover($event)"><ion-icon name="school" style="font-size:20px"></ion-icon>
+          &nbsp;Branch    
+          </ion-segment-button>
+          <ion-segment-button style="border:1px solid black;font-size:12px;" title="ERP Modules" (click)="presentPopover($event)" ><ion-icon name="easel" style="font-size:20px"></ion-icon>
+            Modules     
+          </ion-segment-button>
+          <ion-segment-button style="border:1px solid black; font-size:12px;" title="Academic Year" (click)="presentPopover($event)"><ion-icon name="ribbon" style="font-size:20px"></ion-icon>
+            &nbsp;&nbsp;Year
+            </ion-segment-button>
+        </ion-segment> 
+    <ion-list *ngFor="let page of pages" class="main-item">
+        <div >
+            <ion-item 
+                     (click)="toggleGroup(page)">
+              &nbsp;
+              <strong style="font-size:14px;">{{page.title}}</strong>
+            </ion-item>
+            <div *ngIf="isGroupShown(page)" style="margin-left:35px;">
+              <ion-item class="item-accordion"
+                        *ngFor="let child of page.child" >
+                <p style="font-size:12px;" (click)="openPage(child)">{{child.name}}</p>
+              </ion-item>
+            </div>
+          </div>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
