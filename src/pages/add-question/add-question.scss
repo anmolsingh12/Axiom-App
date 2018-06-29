@@ -2,28 +2,68 @@ page-add-question {
 
 }
 
+h5//Important
+{
+    margin-left:40px;
+    font-size:16px;
+}
 .question-entry
 {
     border: 1px solid greenyellow;
     padding:15px;
-}
-
-hr{
-    color:blue;
-    margin-top: 15px;
-    margin-bottom:15px;
+    margin-bottom:20px;
 }
 
 .select-parameters
 {
     border: 1px solid purple;
     padding:15px;
+    margin-top:20px;
+    margin-bottom:20px;
 }
 
 .ques{
-    @media screen and (min-height : 600px) and (max-height : 700px) {
-        .Landing-formContainer{
-            padding-top: 35px;
-        }
-    }
+    padding:10px;
+    margin-left:30px;
+}
+
+.ans{
+    padding:10px;
+    margin-left:30px;
+}
+.col{
+    padding:0px;
+    margin:0px;
+}
+
+.option-card-div
+{
+    text-align:center;
+    margin-top:20px;
+    padding:3px;
+    border:1px solid lightblue;
+}
+
+
+.option-title
+{
+    padding-left: 7px;
+    padding-right:3px;
+}
+
+.content-md hr//Important
+{
+    background-color:black;
+}
+
+.match-title
+{
+    padding-left: 6px;
+    padding-right:3px;
+}
+
+.option
+{
+    border:1px solid lightgreen;
+    margin-top:15px;
 }

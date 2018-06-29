@@ -1,9 +1,3 @@
-<!--
-  Generated template for the AddQuestionPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar color="primary">
     <button ion-button menuToggle>
@@ -29,38 +23,38 @@
 <ion-content padding>
   <div class="question-entry">
     
-    <h5>Question Entry Option</h5>
+    <h4>Question Entry Option</h4>
     
     <ion-list>
       <ion-item>
         <ion-label>Board*</ion-label>
-        <ion-select>
-          <ion-option *ngFor="let brd of board">{{brd.alias}}</ion-option>
+        <ion-select [(ngModel)]="form.brd">
+          <ion-option *ngFor="let br of board">{{br.alias}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
         <ion-label>Class*</ion-label>
-        <ion-select>
+        <ion-select [(ngModel)]="form.class">
           <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
         <ion-label>Subject*</ion-label>
-        <ion-select>
+        <ion-select [(ngModel)]="form.subject">
           <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Topic*</ion-label>
-        <ion-select>
+        <ion-select [(ngModel)]="form.topic">
           <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Sub-Topic*</ion-label>
-        <ion-select>
+        <ion-select [(ngModel)]="form.subtopic">
           <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
         </ion-select>
       </ion-item>
@@ -70,25 +64,24 @@
   <hr>
   
   <div class="select-parameters">
-    <h5>Select Parameters</h5>
+    <h4>Select Parameters</h4>
     <ion-list>
       <ion-item>
         <ion-label>Question Type*</ion-label>
-        <ion-select (ionChange)="check($event);" >
+        <ion-select (ionChange)="check($event);" [(ngModel)]="form.qType" >
           <ion-option #subjective>Subjective</ion-option>
           <ion-option #objective>Objective</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Question Sub-Type*</ion-label>
-          <ion-select>
-            <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>
-           
+          <ion-select (ionChange)="checkOption($event);" [(ngModel)]="form.qSubType" >
+            <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
           </ion-select>
           </ion-item>
       <ion-item>
         <ion-label>Skill Type*</ion-label>
-        <ion-select >
+        <ion-select [(ngModel)]="form.skillType">
           <ion-option [value]="1">Skill 1</ion-option>
           <ion-option [value]="2">Skill 2</ion-option>
           <ion-option [value]="3">Skill 3</ion-option>
@@ -97,7 +90,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Level of Difficulty*</ion-label>
-        <ion-select >
+        <ion-select [(ngModel)]="form.difficultyLevel">
           <ion-option [value]="Easy">Easy</ion-option>
           <ion-option [value]="Intermediate">Intermediate</ion-option>
           <ion-option [value]="Hard">Hard</ion-option>
@@ -105,7 +98,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Suggested Marks*</ion-label>
-        <ion-select >
+        <ion-select [(ngModel)]="form.marks">
           <ion-option [value]="1">One</ion-option>
           <ion-option [value]="2">Two</ion-option>
           <ion-option [value]="3">Three</ion-option>
@@ -114,7 +107,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Negative Marks</ion-label>
-        <ion-select >
+        <ion-select [(ngModel)]="form.negativeMarks">
           <ion-option [value]="-1">-1</ion-option>
           <ion-option [value]="-2">-2</ion-option>
           <ion-option [value]="-3">-3</ion-option>
@@ -123,7 +116,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Time Alloted(in Mins)*</ion-label>
-        <ion-select >
+        <ion-select [(ngModel)]="form.time">
           <ion-option [value]="1">1</ion-option>
           <ion-option [value]="5">5</ion-option>
           <ion-option [value]="10">10</ion-option>
@@ -132,15 +125,653 @@
       </ion-item>
       <ion-item>
         <ion-label>Reference*</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="form.reference"></ion-input>
       </ion-item>
     </ion-list>
   </div>
   <hr>
-  <h5>Type Question Here</h5>
-  <div class="fill-ups">
+  <h3>Question Details</h3>
+      <div *ngIf="checkFill" class="details-div">
+          <h5>Type Question Here</h5>
+          <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+          <h5>Answer*</h5>
+          <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+          <h5>Explaination</h5>
+          <div class="explaination"[froalaEditor] [(ngModel)]="questionDetails.explaination"></div>
+      </div>
+
+      <div *ngIf="checkIdentify" class="details-div">
+        <h5>Identify the part of:*</h5>
+        <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+        <h5>Answer*</h5>
+        <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+        <h5>Explaination:</h5>
+        <div class="explaination"[froalaEditor] [(ngModel)]="questionDetails.explaination"></div>
+    </div>
+
+    <div *ngIf="checkOneLine" class="details-div">
+      <h5>Type your Question:*</h5>
+      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+      <h5>Answer (One Line/One Word Answer Type):*</h5>
+      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    </div>
+
+    <div *ngIf="checkVSA" class="details-div">
+      <h5>Type your Question:*</h5>
+      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+      <h5>Answer (Very Short Answer Type):*</h5>
+      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    </div>
+
+    <div *ngIf="checkSA" class="details-div">
+      <h5>Type your Question:*</h5>
+      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+      <h5>Answer (Short Answer Type):*</h5>
+      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    </div>
+
+    <div *ngIf="checkLA" class="details-div">
+      <h5>Type your Question:*</h5>
+      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+      <h5>Answer:*</h5>
+      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    </div>
+
+    <div *ngIf="checkVLA" class="details-div">
+      <h5>Type your Question:*</h5>
+      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+      <h5>Answer (Very Long Answer Type):*</h5>
+      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    </div>
+
+    <div *ngIf="checkMcqSingle" class="details-div">
+      <h5>Type Question:*</h5>
       <div class="ques"[froalaEditor]></div>
-      <h5>Answer</h5>
-      <div class="ans"[froalaEditor]></div>
+      <ion-grid radio-group>
+        <ion-list-header>
+          <h3>MCQ(Single Response)</h3>
+        </ion-list-header>
+    
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>A</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-radio item-left></ion-radio>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+        
+    
+        <ion-row>
+            <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="option-title"><strong>B</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-radio item-left></ion-radio>
+              </ion-card>
+            </ion-col>
+          <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>C</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-radio item-left></ion-radio>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+    
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>D</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-radio item-left></ion-radio>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="checkMcqMultiple" class="details-div">
+        <h5>Type Question:*</h5>
+        <div class="ques"[froalaEditor]></div>
+        <ion-grid>
+          <ion-list-header>
+            <h3>MCQ(Multiple Response)</h3>
+          </ion-list-header>
+      
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>A</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-checkbox item-left></ion-checkbox>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+          
+      
+          <ion-row>
+              <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>B</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-checkbox item-left></ion-checkbox>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+  
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>C</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-checkbox item-left></ion-checkbox>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            </ion-row>
+      
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>D</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-checkbox item-left></ion-checkbox>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div *ngIf="checkTF" class="details-div">
+          <h5>Type Question:*</h5>
+          <div class="ques"[froalaEditor]></div>
+          
+          <ion-grid>
+              <ion-row>
+                  <ion-col col-4>
+                      <ion-card class="option-card-div">
+                        <ion-label class="option-title"><strong>True</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-radio item-left></ion-radio>
+                      </ion-card>
+                    </ion-col>
+              </ion-row>
+              
+          
+              <ion-row>
+                  <ion-col col-4>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>False</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-radio item-left></ion-radio>
+                    </ion-card>
+                  </ion-col>
+              </ion-row>
+              
+          <h5>Explaination:*</h5>
+          <div class="ans"[froalaEditor]></div>
+        </ion-grid>
+      </div>
+
+      <div *ngIf="checkMatch" class="details-div">
+          <h5>Type Question:*</h5>
+          <div class="ques"[froalaEditor]></div>
+          <ion-grid >       
+            <div class="option">
+                <ion-row>
+                    <ion-col col-2>
+                        <ion-card class="option-card-div">
+                          <ion-label class="option-title"><strong>A</strong></ion-label>
+                        </ion-card>
+                      </ion-col>
+                    <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+                </ion-row>
+                
+                <ion-row>
+                    <ion-col col-2>
+                        <ion-card class="option-card-div">
+                            <ion-label class="option-title"><strong>P</strong></ion-label>
+                          </ion-card>
+                    </ion-col>
+                  <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+                </ion-row>
+                <ion-grid radio-group>
+                  <ion-row>
+                      <ion-col col-3></ion-col>
+                      <ion-col col-2>
+                          <ion-card class="option-card-div">
+                            <ion-label class="match-title"><strong>P</strong></ion-label>
+                            <hr class="option-radio-divider">
+                            <ion-radio></ion-radio>
+                          </ion-card>
+                  </ion-col>
+
+                  <ion-col col-2>
+                          <ion-card class="option-card-div">
+                            <ion-label class="match-title"><strong>Q</strong></ion-label>
+                            <hr class="option-radio-divider">
+                            <ion-radio></ion-radio>
+                          </ion-card>
+                  </ion-col>
+                  <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="match-title"><strong>R</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-radio></ion-radio>
+                      </ion-card>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>S</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+    
+        <div class="option">
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>B</strong></ion-label>
+                    </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            </ion-row>
+            
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                        <ion-label class="option-title"><strong>Q</strong></ion-label>
+                      </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            </ion-row>
+            <ion-grid radio-group>
+              <ion-row>
+                  <ion-col col-3></ion-col>
+                  <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="match-title"><strong>P</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-radio></ion-radio>
+                      </ion-card>
+              </ion-col>
+
+              <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="match-title"><strong>Q</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-radio></ion-radio>
+                      </ion-card>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>R</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+          </ion-col>
+          <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>S</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-radio></ion-radio>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="option">
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>C</strong></ion-label>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+        
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>R</strong></ion-label>
+                  </ion-card>
+            </ion-col>
+          <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+        <ion-grid radio-group>
+          <ion-row>
+              <ion-col col-3></ion-col>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>P</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+          </ion-col>
+
+          <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>Q</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+          </ion-col>
+          <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>R</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-radio></ion-radio>
+              </ion-card>
+          </ion-col>
+          <ion-col col-2>
+            <ion-card class="option-card-div">
+              <ion-label class="match-title"><strong>S</strong></ion-label>
+              <hr class="option-radio-divider">
+              <ion-radio></ion-radio>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="option">
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="option-title"><strong>D</strong></ion-label>
+                </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+        
+        <ion-row>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>S</strong></ion-label>
+                  </ion-card>
+            </ion-col>
+          <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+        </ion-row>
+        <ion-grid radio-group>
+          <ion-row>
+              <ion-col col-3></ion-col>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>P</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+          </ion-col>
+
+          <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>Q</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-radio></ion-radio>
+                  </ion-card>
+          </ion-col>
+          <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>R</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-radio></ion-radio>
+              </ion-card>
+          </ion-col>
+          <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>S</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-radio></ion-radio>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <h5>Explaination:*</h5>
+          <div class="ans"[froalaEditor]></div>
+  </ion-grid>
   </div>
+
+  <div *ngIf="checkMatrix" class="details-div">
+      <h5>Type Question:*</h5>
+      <div class="ques"[froalaEditor]></div>
+      <ion-grid >       
+        <div class="option">
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>A</strong></ion-label>
+                    </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            </ion-row>
+            
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                        <ion-label class="option-title"><strong>P</strong></ion-label>
+                      </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            </ion-row>
+            <ion-grid radio-group>
+              <ion-row>
+                  <ion-col col-3></ion-col>
+                  <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="match-title"><strong>P</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-checkbox></ion-checkbox>
+                      </ion-card>
+              </ion-col>
+
+              <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="match-title"><strong>Q</strong></ion-label>
+                        <hr class="option-radio-divider">
+                        <ion-checkbox></ion-checkbox>
+                      </ion-card>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="match-title"><strong>R</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-checkbox></ion-checkbox>
+                  </ion-card>
+          </ion-col>
+          <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>S</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-checkbox></ion-checkbox>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+          <div class="option">
+              <ion-row>
+                  <ion-col col-2>
+                      <ion-card class="option-card-div">
+                        <ion-label class="option-title"><strong>B</strong></ion-label>
+                      </ion-card>
+                    </ion-col>
+                  <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+              </ion-row>
+              
+              <ion-row>
+                  <ion-col col-2>
+                      <ion-card class="option-card-div">
+                          <ion-label class="option-title"><strong>Q</strong></ion-label>
+                        </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+              </ion-row>
+              <ion-grid radio-group>
+                <ion-row>
+                    <ion-col col-3></ion-col>
+                    <ion-col col-2>
+                        <ion-card class="option-card-div">
+                          <ion-label class="match-title"><strong>P</strong></ion-label>
+                          <hr class="option-radio-divider">
+                          <ion-checkbox></ion-checkbox>
+                        </ion-card>
+                </ion-col>
+
+                <ion-col col-2>
+                        <ion-card class="option-card-div">
+                          <ion-label class="match-title"><strong>Q</strong></ion-label>
+                          <hr class="option-radio-divider">
+                          <ion-checkbox></ion-checkbox>
+                        </ion-card>
+                </ion-col>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="match-title"><strong>R</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox></ion-checkbox>
+                    </ion-card>
+            </ion-col>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="match-title"><strong>S</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-checkbox></ion-checkbox>
+                </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="option">
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>C</strong></ion-label>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+          
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>R</strong></ion-label>
+                    </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+          <ion-grid radio-group>
+            <ion-row>
+                <ion-col col-3></ion-col>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="match-title"><strong>P</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox></ion-checkbox>
+                    </ion-card>
+            </ion-col>
+
+            <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="match-title"><strong>Q</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox></ion-checkbox>
+                    </ion-card>
+            </ion-col>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="match-title"><strong>R</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-checkbox></ion-checkbox>
+                </ion-card>
+            </ion-col>
+            <ion-col col-2>
+              <ion-card class="option-card-div">
+                <ion-label class="match-title"><strong>S</strong></ion-label>
+                <hr class="option-radio-divider">
+                <ion-checkbox></ion-checkbox>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="option">
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>D</strong></ion-label>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+          
+          <ion-row>
+              <ion-col col-2>
+                  <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>S</strong></ion-label>
+                    </ion-card>
+              </ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+          </ion-row>
+          <ion-grid radio-group>
+            <ion-row>
+                <ion-col col-3></ion-col>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="match-title"><strong>P</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox></ion-checkbox>
+                    </ion-card>
+            </ion-col>
+
+            <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="match-title"><strong>Q</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox></ion-checkbox>
+                    </ion-card>
+            </ion-col>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="match-title"><strong>R</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-checkbox></ion-checkbox>
+                </ion-card>
+            </ion-col>
+            <ion-col col-2>
+                <ion-card class="option-card-div">
+                  <ion-label class="match-title"><strong>S</strong></ion-label>
+                  <hr class="option-radio-divider">
+                  <ion-checkbox></ion-checkbox>
+                </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <h5>Explaination:*</h5>
+            <div class="ans"[froalaEditor]></div>
+      </ion-grid>
+      </div>
+      <button ion-button (click)="logForm()">Submit</button>
+      <button ion-button color="danger"><input type=reset>Reset</button>
 </ion-content>
