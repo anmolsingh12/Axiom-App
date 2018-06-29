@@ -10,13 +10,13 @@
 
   <ion-content>
       <ion-segment id="btn-grp">
-          <ion-segment-button style="border:1px solid black;font-size:12px;" title="School Branch" (click)="presentPopover($event)"><ion-icon name="school" style="font-size:20px"></ion-icon>
+          <ion-segment-button class="seg-btn" title="School Branch" (click)="presentPopover($event)"><ion-icon name="school" id="seg-icon"></ion-icon>
           &nbsp;Branch    
           </ion-segment-button>
-          <ion-segment-button style="border:1px solid black;font-size:12px;" title="ERP Modules" (click)="presentPopover($event)" ><ion-icon name="easel" style="font-size:20px"></ion-icon>
+          <ion-segment-button class="seg-btn" title="ERP Modules" (click)="presentPopover($event)" ><ion-icon name="easel" id="seg-icon"></ion-icon>
             Modules     
           </ion-segment-button>
-          <ion-segment-button style="border:1px solid black; font-size:12px;" title="Academic Year" (click)="presentPopover($event)"><ion-icon name="ribbon" style="font-size:20px"></ion-icon>
+          <ion-segment-button class="seg-btn" title="Academic Year" (click)="presentPopover($event)"><ion-icon name="ribbon" id="seg-icon"></ion-icon>
             &nbsp;&nbsp;Year
             </ion-segment-button>
         </ion-segment> 
@@ -25,12 +25,12 @@
             <ion-item 
                      (click)="toggleGroup(page)">
               &nbsp;
-              <strong style="font-size:14px;">{{page.title}}</strong>
+              <strong class="accordion-title">{{page.title}}</strong>
             </ion-item>
             <div *ngIf="isGroupShown(page)" style="margin-left:35px;">
               <ion-item class="item-accordion"
                         *ngFor="let child of page.child" >
-                <p style="font-size:12px;" (click)="openPage(child)">{{child.name}}</p>
+                <p class="accordion-sub-title" (click)="openPage(child)" menuClose >{{child.name}}</p>
               </ion-item>
             </div>
           </div>

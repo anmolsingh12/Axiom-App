@@ -1,3 +1,29 @@
 page-add-question {
 
 }
+
+.question-entry
+{
+    border: 1px solid greenyellow;
+    padding:15px;
+}
+
+hr{
+    color:blue;
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+
+.select-parameters
+{
+    border: 1px solid purple;
+    padding:15px;
+}
+
+.ques{
+    @media screen and (min-height : 600px) and (max-height : 700px) {
+        .Landing-formContainer{
+            padding-top: 35px;
+        }
+    }
+}

@@ -5,14 +5,142 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>AddQuestion</ion-title>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+      <ion-toolbar no-border-top>
+          <ion-buttons start>
+            <button ion-button icon-only>
+                <ion-icon id="icon" name="contact"></ion-icon>
+            </button>
+          </ion-buttons>
+          <ion-title color="secondary">Add Question</ion-title>
+          <ion-buttons end>
+            <button  ion-button icon-end color="secondary">
+              <ion-icon id="icon" name="log-out"></ion-icon>
+            </button>
+          </ion-buttons>
+      </ion-toolbar>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
+  <div class="question-entry">
+    
+    <h5>Question Entry Option</h5>
+    
+    <ion-list>
+      <ion-item>
+        <ion-label>Board*</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let brd of board">{{brd.alias}}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Class*</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Subject*</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Topic*</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sub-Topic*</ion-label>
+        <ion-select>
+          <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+  
+  <hr>
+  
+  <div class="select-parameters">
+    <h5>Select Parameters</h5>
+    <ion-list>
+      <ion-item>
+        <ion-label>Question Type*</ion-label>
+        <ion-select (ionChange)="check($event);" >
+          <ion-option #subjective>Subjective</ion-option>
+          <ion-option #objective>Objective</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Question Sub-Type*</ion-label>
+          <ion-select>
+            <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>
+           
+          </ion-select>
+          </ion-item>
+      <ion-item>
+        <ion-label>Skill Type*</ion-label>
+        <ion-select >
+          <ion-option [value]="1">Skill 1</ion-option>
+          <ion-option [value]="2">Skill 2</ion-option>
+          <ion-option [value]="3">Skill 3</ion-option>
+          <ion-option [value]="4">Skill 4</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Level of Difficulty*</ion-label>
+        <ion-select >
+          <ion-option [value]="Easy">Easy</ion-option>
+          <ion-option [value]="Intermediate">Intermediate</ion-option>
+          <ion-option [value]="Hard">Hard</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Suggested Marks*</ion-label>
+        <ion-select >
+          <ion-option [value]="1">One</ion-option>
+          <ion-option [value]="2">Two</ion-option>
+          <ion-option [value]="3">Three</ion-option>
+          <ion-option [value]="4">Four</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Negative Marks</ion-label>
+        <ion-select >
+          <ion-option [value]="-1">-1</ion-option>
+          <ion-option [value]="-2">-2</ion-option>
+          <ion-option [value]="-3">-3</ion-option>
+          <ion-option [value]="-4">-4</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Time Alloted(in Mins)*</ion-label>
+        <ion-select >
+          <ion-option [value]="1">1</ion-option>
+          <ion-option [value]="5">5</ion-option>
+          <ion-option [value]="10">10</ion-option>
+          <ion-option [value]="15">15</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Reference*</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <hr>
+  <h5>Type Question Here</h5>
+  <div class="fill-ups">
+      <div class="ques"[froalaEditor]></div>
+      <h5>Answer</h5>
+      <div class="ans"[froalaEditor]></div>
+  </div>
 </ion-content>
