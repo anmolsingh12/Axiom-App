@@ -1,0 +1,91 @@
+<!--
+  Generated template for the BulkUploadPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bulk Upload</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button (click)="fileChoose()">Choose file</button>
+
+  <div class="generate-question-template-form">
+    <form [formGroup]="questionTemplateGeneratorForm">
+      <ion-item>
+        <ion-label>Board*</ion-label>
+        <ion-select formControlName="inpBoard">
+          <ion-option *ngFor="let br of board">{{br.alias}}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Class*</ion-label>
+        <ion-select formControlName="inpClass">
+          <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Subject*</ion-label>
+        <ion-select formControlName="inpSubject">
+          <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Topic*</ion-label>
+        <ion-select formControlName="inpTopic">
+          <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sub-Topic*</ion-label>
+        <ion-select formControlName="inpSubTopic">
+          <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Question Type*</ion-label>
+        <ion-select (ionChange)="check($event);" formControlName="inpQType">
+          <ion-option #subjective>Subjective</ion-option>
+          <ion-option #objective>Objective</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Question Sub-Type*</ion-label>
+          <ion-select formControlName="inpQSubType">
+            <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
+          </ion-select>
+          </ion-item>
+      <ion-item>
+        <ion-label>Skill Type*</ion-label>
+        <ion-select formControlName="inpSkillType">
+          <ion-option [value]="1">Skill 1</ion-option>
+          <ion-option [value]="2">Skill 2</ion-option>
+          <ion-option [value]="3">Skill 3</ion-option>
+          <ion-option [value]="4">Skill 4</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Level of Difficulty*</ion-label>
+        <ion-select formControlName="inpDifficultyLevel">
+          <ion-option [value]="Easy">Easy</ion-option>
+          <ion-option [value]="Intermediate">Intermediate</ion-option>
+          <ion-option [value]="Hard">Hard</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <button text-center ion-button class="generate-button" type="submit" color="special" (click)="logForm()">Generate Excel Sheet</button>
+    </form>
+  </div>
+</ion-content>

@@ -1,16 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @IonicPage()
 @Component({
   selector: 'page-add-question',
   templateUrl: 'add-question.html',
 })
-export class AddQuestionPage {
 
-  // @ViewChild("qType")qType;
-  // @ViewChild("qSubType")qSubType1;
+export class AddQuestionPage 
+{
+  private quesEntry:FormGroup;
+  private quesDetails:FormGroup;
+  private quesAns:FormGroup;
+  private objectiveQuesAns:FormGroup;
+  //private multipleMCQ:FormGroup;
 
   board:Array<{name:string, alias:string }>;
   class:Array<{name:string, value:string}>;
@@ -33,15 +37,69 @@ export class AddQuestionPage {
   checkMatch:boolean = false;
   checkMatrix:boolean = false;
 
-  form:Array<{brd:string, class:string, subject:string, topic:string,
-               subtopic:string, qType:string, qSubType:string, skillType:string,
-               difficultyLevel:string, marks:number, negativeMarks:number, time:number,
-               reference:string}>;
+
+  // form:Array<{brd:string, class:string, subject:string, topic:string,
+  //              subtopic:string, qType:string, qSubType:string, skillType:string,
+  //              difficultyLevel:string, marks:number, negativeMarks:number, time:number,
+  //              reference:string}>;
 
   questionDetails:Array<{question:string, answer:string, explaination:string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) 
   {
+    this.quesEntry = this.formBuilder.group(
+      {
+        inpBoard: [''],
+        inpClass: [''],
+        inpSubject:[''],
+        inpTopic:[''],
+        inpSubTopic:['']
+      });
+
+      this.quesDetails = this.formBuilder.group(
+        {
+          inpQType:[''],
+          inpQSubType:[''],
+          inpSkillType:[''],
+          inpDifficultyLevel:[''],
+          inpMarks:[''],
+          inpNegMarks:[''],
+          inpTime:[''],
+          inpReference:['']
+        });
+
+        this.quesAns = this.formBuilder.group(
+          {
+            question:[''],
+            answer:[''],
+            explaination:['']
+          });
+        
+        this.objectiveQuesAns = this.formBuilder.group(
+          {
+            question:[''],
+            option1:[''],
+            option2:[''],
+            option3:[''],
+            option4:[''],
+            correctOption:[''],
+            answer:['']
+          }
+        );
+
+        // this.multipleMCQ = this.formBuilder.group(
+        //   {
+        //     question:[''],
+        //     option1:[''],
+        //     option2:[''],
+        //     option3:[''],
+        //     option4:[''],
+        //     correctOption:[],
+        //     answer:['']
+        //   }
+        // );
+
+     
   
     this.board = [{name:'Central Board of Secondary Education', alias:'CBSE'},
                   {name: 'Indian School Certificate Examinations', alias:'ICSE'},
@@ -69,10 +127,45 @@ export class AddQuestionPage {
                   
   }
 
+  
   logForm()
   {
-    console.log(this.form+"   "+this.questionDetails );
+    if(this.objectiveQuesAns.value.answer=="A")
+    {
+      this.objectiveQuesAns.value.correctOption=this.objectiveQuesAns.value.option1;
+    }
+
+    else if(this.objectiveQuesAns.value.answer=="B")
+    {
+      this.objectiveQuesAns.value.correctOption=this.objectiveQuesAns.value.option2;
+    }
+
+    else if(this.objectiveQuesAns.value.answer=="C")
+    {
+      this.objectiveQuesAns.value.correctOption=this.objectiveQuesAns.value.option3;
+    }
+
+    else if(this.objectiveQuesAns.value.answer=="D")
+    {
+      this.objectiveQuesAns.value.correctOption=this.objectiveQuesAns.value.option4;
+    }
+    console.log(this.quesEntry.value);
+    console.log(this.quesDetails.value);
+    console.log(this.quesAns.value);
+    console.log(this.objectiveQuesAns.value);
   }
+
+  resetForm()
+  {
+    this.quesAns.reset();
+  }
+
+
+  // questionEntryFormSubmit(value:any)
+  // {
+  //   console.log(this.quesEntry.value);
+  //   console.log(this.quesDetails.value);
+  // }
 
   check(value:any)
   {  

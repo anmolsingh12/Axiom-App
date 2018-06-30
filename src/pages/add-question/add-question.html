@@ -8,7 +8,7 @@
             <button ion-button icon-only>
                 <ion-icon id="icon" name="contact"></ion-icon>
             </button>
-          </ion-buttons>
+          </ion-buttons> 
           <ion-title color="secondary">Add Question</ion-title>
           <ion-buttons end>
             <button  ion-button icon-end color="secondary">
@@ -25,63 +25,63 @@
     
     <h4>Question Entry Option</h4>
     
-    <ion-list>
+    <form [formGroup]="quesEntry">
       <ion-item>
         <ion-label>Board*</ion-label>
-        <ion-select [(ngModel)]="form.brd">
+        <ion-select formControlName="inpBoard">
           <ion-option *ngFor="let br of board">{{br.alias}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
         <ion-label>Class*</ion-label>
-        <ion-select [(ngModel)]="form.class">
+        <ion-select formControlName="inpClass">
           <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
         <ion-label>Subject*</ion-label>
-        <ion-select [(ngModel)]="form.subject">
+        <ion-select formControlName="inpSubject">
           <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Topic*</ion-label>
-        <ion-select [(ngModel)]="form.topic">
+        <ion-select formControlName="inpTopic">
           <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Sub-Topic*</ion-label>
-        <ion-select [(ngModel)]="form.subtopic">
+        <ion-select formControlName="inpSubTopic">
           <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
         </ion-select>
       </ion-item>
-    </ion-list>
-  </div>
-  
+      </form>
+    </div>
+
   <hr>
   
   <div class="select-parameters">
     <h4>Select Parameters</h4>
-    <ion-list>
+    <form [formGroup]="quesDetails" >
       <ion-item>
         <ion-label>Question Type*</ion-label>
-        <ion-select (ionChange)="check($event);" [(ngModel)]="form.qType" >
+        <ion-select (ionChange)="check($event); resetForm()" formControlName="inpQType">
           <ion-option #subjective>Subjective</ion-option>
           <ion-option #objective>Objective</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Question Sub-Type*</ion-label>
-          <ion-select (ionChange)="checkOption($event);" [(ngModel)]="form.qSubType" >
+          <ion-select (ionChange)="checkOption($event); resetForm()" formControlName="inpQSubType">
             <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
           </ion-select>
           </ion-item>
       <ion-item>
         <ion-label>Skill Type*</ion-label>
-        <ion-select [(ngModel)]="form.skillType">
+        <ion-select formControlName="inpSkillType">
           <ion-option [value]="1">Skill 1</ion-option>
           <ion-option [value]="2">Skill 2</ion-option>
           <ion-option [value]="3">Skill 3</ion-option>
@@ -90,7 +90,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Level of Difficulty*</ion-label>
-        <ion-select [(ngModel)]="form.difficultyLevel">
+        <ion-select formControlName="inpDifficultyLevel">
           <ion-option [value]="Easy">Easy</ion-option>
           <ion-option [value]="Intermediate">Intermediate</ion-option>
           <ion-option [value]="Hard">Hard</ion-option>
@@ -98,7 +98,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Suggested Marks*</ion-label>
-        <ion-select [(ngModel)]="form.marks">
+        <ion-select formControlName="inpMarks">
           <ion-option [value]="1">One</ion-option>
           <ion-option [value]="2">Two</ion-option>
           <ion-option [value]="3">Three</ion-option>
@@ -107,7 +107,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Negative Marks</ion-label>
-        <ion-select [(ngModel)]="form.negativeMarks">
+        <ion-select formControlName="inpNegMarks">
           <ion-option [value]="-1">-1</ion-option>
           <ion-option [value]="-2">-2</ion-option>
           <ion-option [value]="-3">-3</ion-option>
@@ -116,7 +116,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Time Alloted(in Mins)*</ion-label>
-        <ion-select [(ngModel)]="form.time">
+        <ion-select formControlName="inpTime">
           <ion-option [value]="1">1</ion-option>
           <ion-option [value]="5">5</ion-option>
           <ion-option [value]="10">10</ion-option>
@@ -125,137 +125,97 @@
       </ion-item>
       <ion-item>
         <ion-label>Reference*</ion-label>
-        <ion-input [(ngModel)]="form.reference"></ion-input>
+        <ion-input formControlName="inpReference"></ion-input>
       </ion-item>
-    </ion-list>
+    </form>
   </div>
   <hr>
   <h3>Question Details</h3>
       <div *ngIf="checkFill" class="details-div">
+        <form [formGroup]="quesAns">
           <h5>Type Question Here</h5>
-          <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
+          <div class="ques"[froalaEditor] formControlName="question"></div>
           <h5>Answer*</h5>
-          <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+          <div class="ans"[froalaEditor] formControlName="answer"></div>
           <h5>Explaination</h5>
-          <div class="explaination"[froalaEditor] [(ngModel)]="questionDetails.explaination"></div>
+          <div class="explaination"[froalaEditor] formControlName="explaination"></div>
+        </form>
       </div>
 
       <div *ngIf="checkIdentify" class="details-div">
-        <h5>Identify the part of:*</h5>
-        <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-        <h5>Answer*</h5>
-        <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
-        <h5>Explaination:</h5>
-        <div class="explaination"[froalaEditor] [(ngModel)]="questionDetails.explaination"></div>
+        <form [formGroup]="quesAns">
+          <h5>Identify the part of:*</h5>
+          <div class="ques"[froalaEditor] formControlName="question"></div>
+          <h5>Answer*</h5>
+          <div class="ans"[froalaEditor] formControlName="answer"></div>
+          <h5>Explaination:</h5>
+          <div class="explaination"[froalaEditor] formControlName="explaination"></div>
+        </form>
     </div>
 
     <div *ngIf="checkOneLine" class="details-div">
-      <h5>Type your Question:*</h5>
-      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-      <h5>Answer (One Line/One Word Answer Type):*</h5>
-      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
-    </div>
+      <form [formGroup]="quesAns">
+        <h5>Type your Question:*</h5>
+        <div class="ques"[froalaEditor] formControlName="question"></div>
+        <h5>Answer (One Line/One Word Answer Type):*</h5>
+        <div class="ans"[froalaEditor] formControlName="answer"></div>
+      </form>
+      </div>
 
     <div *ngIf="checkVSA" class="details-div">
-      <h5>Type your Question:*</h5>
-      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-      <h5>Answer (Very Short Answer Type):*</h5>
-      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+      <form [formGroup]="quesAns">
+        <h5>Type your Question:*</h5>
+        <div class="ques"[froalaEditor] formControlName="question"></div>
+        <h5>Answer (Very Short Answer Type):*</h5>
+        <div class="ans"[froalaEditor] formControlName="answer"></div>
+      </form>
     </div>
 
     <div *ngIf="checkSA" class="details-div">
-      <h5>Type your Question:*</h5>
-      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-      <h5>Answer (Short Answer Type):*</h5>
-      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
-    </div>
+      <form [formGroup]="quesAns">
+        <h5>Type your Question:*</h5>
+        <div class="ques" [froalaEditor] formControlName="question"></div>
+        <h5>Answer (Short Answer Type):*</h5>
+        <div class="ans" [froalaEditor] formControlName="answer"></div>
+      </form>
+      </div>
 
     <div *ngIf="checkLA" class="details-div">
-      <h5>Type your Question:*</h5>
-      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-      <h5>Answer:*</h5>
-      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
-    </div>
+      <form [formGroup]="quesAns">
+        <h5>Type your Question:*</h5>
+        <div class="ques" [froalaEditor] formControlName="question"></div>
+        <h5>Answer:*</h5>
+        <div class="ans" [froalaEditor] formControlName="answer"></div>
+      </form>
+      </div>
 
     <div *ngIf="checkVLA" class="details-div">
-      <h5>Type your Question:*</h5>
-      <div class="ques"[froalaEditor] [(ngModel)]="questionDetails.question"></div>
-      <h5>Answer (Very Long Answer Type):*</h5>
-      <div class="ans"[froalaEditor] [(ngModel)]="questionDetails.answer"></div>
+    <form [formGroup]="quesAns">
+        <h5>Type your Question:*</h5>
+        <div class="ques" [froalaEditor] formControlName="question"></div>
+        <h5>Answer (Very Long Answer Type):*</h5>
+        <div class="ans" [froalaEditor] formControlName="answer"></div>
+      </form>
     </div>
 
     <div *ngIf="checkMcqSingle" class="details-div">
+    <form [formGroup]="objectiveQuesAns">
       <h5>Type Question:*</h5>
-      <div class="ques"[froalaEditor]></div>
-      <ion-grid radio-group>
-        <ion-list-header>
-          <h3>MCQ(Single Response)</h3>
-        </ion-list-header>
-    
-        <ion-row>
-            <ion-col col-2>
-                <ion-card class="option-card-div">
-                  <ion-label class="option-title"><strong>A</strong></ion-label>
-                  <hr class="option-radio-divider">
-                  <ion-radio item-left></ion-radio>
-                </ion-card>
-              </ion-col>
-            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
-        </ion-row>
-        
-    
-        <ion-row>
-            <ion-col col-2>
-              <ion-card class="option-card-div">
-                <ion-label class="option-title"><strong>B</strong></ion-label>
-                <hr class="option-radio-divider">
-                <ion-radio item-left></ion-radio>
-              </ion-card>
-            </ion-col>
-          <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
-        </ion-row>
-
-        <ion-row>
-            <ion-col col-2>
-                <ion-card class="option-card-div">
-                  <ion-label class="option-title"><strong>C</strong></ion-label>
-                  <hr class="option-radio-divider">
-                  <ion-radio item-left></ion-radio>
-                </ion-card>
-              </ion-col>
-            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
-          </ion-row>
-    
-        <ion-row>
-            <ion-col col-2>
-                <ion-card class="option-card-div">
-                  <ion-label class="option-title"><strong>D</strong></ion-label>
-                  <hr class="option-radio-divider">
-                  <ion-radio item-left></ion-radio>
-                </ion-card>
-              </ion-col>
-            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-
-    <div *ngIf="checkMcqMultiple" class="details-div">
-        <h5>Type Question:*</h5>
-        <div class="ques"[froalaEditor]></div>
-        <ion-grid>
+        <div class="ques"[froalaEditor] formControlName="question"></div>
+        <ion-grid radio-group formControlName="answer">
           <ion-list-header>
-            <h3>MCQ(Multiple Response)</h3>
+            <h3>MCQ(Single Response)</h3>
           </ion-list-header>
       
           <ion-row>
               <ion-col col-2>
                   <ion-card class="option-card-div">
-                    <ion-label class="option-title"><strong>A</strong></ion-label>
+                    <ion-label class="option-title" ><strong>A</strong></ion-label>
                     <hr class="option-radio-divider">
-                    <ion-checkbox item-left></ion-checkbox>
+                    <ion-radio item-left value="A"></ion-radio>
                   </ion-card>
                 </ion-col>
-              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor] formControlName="option1"></div></ion-col>
           </ion-row>
           
       
@@ -264,21 +224,21 @@
                 <ion-card class="option-card-div">
                   <ion-label class="option-title"><strong>B</strong></ion-label>
                   <hr class="option-radio-divider">
-                  <ion-checkbox item-left></ion-checkbox>
+                  <ion-radio item-left value="B"></ion-radio>
                 </ion-card>
               </ion-col>
-            <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+            <ion-col col-10><div class="ans" [froalaEditor]  formControlName="option2"></div></ion-col>
           </ion-row>
-  
+
           <ion-row>
               <ion-col col-2>
                   <ion-card class="option-card-div">
                     <ion-label class="option-title"><strong>C</strong></ion-label>
                     <hr class="option-radio-divider">
-                    <ion-checkbox item-left></ion-checkbox>
+                    <ion-radio item-left value="C"></ion-radio>
                   </ion-card>
                 </ion-col>
-              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor] formControlName="option3"></div></ion-col>
             </ion-row>
       
           <ion-row>
@@ -286,13 +246,72 @@
                   <ion-card class="option-card-div">
                     <ion-label class="option-title"><strong>D</strong></ion-label>
                     <hr class="option-radio-divider">
-                    <ion-checkbox item-left></ion-checkbox>
+                    <ion-radio item-left value="D"></ion-radio>
                   </ion-card>
                 </ion-col>
-              <ion-col col-10><div class="ans" [froalaEditor]></div></ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor] formControlName="option4"></div></ion-col>
           </ion-row>
         </ion-grid>
+      </form>
+    </div>
+
+    <div *ngIf="checkMcqMultiple" class="details-div">
+        <h5>Type Question:*</h5>
+        <form [formGroup]="multipleMCQ">
+          <div class="ques"[froalaEditor] formControlName="question"></div>
+          <ion-grid>
+            <ion-list-header>
+              <h3>MCQ(Multiple Response)</h3>
+            </ion-list-header>
+        
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>A</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox item-left formControlName="correctAnswer.item1"></ion-checkbox>
+                    </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option1"></div></ion-col>
+            </ion-row>
+            
+        
+            <ion-row>
+                <ion-col col-2>
+                  <ion-card class="option-card-div">
+                    <ion-label class="option-title"><strong>B</strong></ion-label>
+                    <hr class="option-radio-divider">
+                    <ion-checkbox item-left formControlName=""></ion-checkbox>
+                  </ion-card>
+                </ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor] formControlName="option2" ></div></ion-col>
+            </ion-row>
+    
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>C</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox item-left></ion-checkbox>
+                    </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option3" ></div></ion-col>
+              </ion-row>
+        
+            <ion-row>
+                <ion-col col-2>
+                    <ion-card class="option-card-div">
+                      <ion-label class="option-title"><strong>D</strong></ion-label>
+                      <hr class="option-radio-divider">
+                      <ion-checkbox item-left ></ion-checkbox>
+                    </ion-card>
+                  </ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option4"></div></ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
       </div>
+     
 
       <div *ngIf="checkTF" class="details-div">
           <h5>Type Question:*</h5>
@@ -772,6 +791,7 @@
             <div class="ans"[froalaEditor]></div>
       </ion-grid>
       </div>
-      <button ion-button (click)="logForm()">Submit</button>
-      <button ion-button color="danger"><input type=reset>Reset</button>
+      <!--"-->
+      <button ion-button type="submit" (click)="logForm()" >Submit</button>
+      <input ion-button color="danger" type=reset value="Reset">
 </ion-content>

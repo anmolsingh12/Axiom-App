@@ -5,12 +5,15 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {AddQuestionPage} from '../pages/add-question/add-question';
+import {QuestionBankPage} from '../pages/question-bank/question-bank';
+import {BulkUploadPage} from '../pages/bulk-upload/bulk-upload'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {PopoverComponent} from '../components/popover/popover';
 import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { FileChooser } from '@ionic-native/file-chooser';
 
 
 
@@ -20,7 +23,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     HomePage,
     PopoverComponent,
     AddQuestionPage,
-    
+    QuestionBankPage,
+    BulkUploadPage
   ],
   imports: [
     BrowserModule,
@@ -33,11 +37,14 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     MyApp,
     HomePage,
     AddQuestionPage,
-    PopoverComponent
+    QuestionBankPage,
+    PopoverComponent,
+    BulkUploadPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    FileChooser,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

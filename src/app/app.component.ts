@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
 import {PopoverComponent } from '../components/popover/popover';
 import {AddQuestionPage} from '../pages/add-question/add-question';
+import {QuestionBankPage} from '../pages/question-bank/question-bank';
+import {BulkUploadPage} from '../pages/bulk-upload/bulk-upload';
 
 
 @Component({
@@ -24,8 +26,8 @@ export class MyApp {
 
     this.pages = [
       { title: 'Question Management',
-          child: [{name:'Question Bank', component:null},
-                  {name:'Bulk upload', component:null},
+          child: [{name:'Question Bank', component:QuestionBankPage},
+                  {name:'Bulk upload', component:BulkUploadPage},
                    {name:'Add Question', component:AddQuestionPage},
                    {name:'Review', component:null }]
       },
