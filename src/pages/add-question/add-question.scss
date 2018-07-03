@@ -1,69 +1,79 @@
 page-add-question {
 
-}
+    .question-entry
+    {
+        border: 1px solid greenyellow;
+        padding:5px;
+        margin-bottom:7px;
+    }
 
-h5//Important
-{
-    margin-left:40px;
-    font-size:16px;
-}
-.question-entry
-{
-    border: 1px solid greenyellow;
-    padding:15px;
-    margin-bottom:20px;
-}
+    .select-parameters
+    {
+        border: 1px solid purple;
+        padding:5px;
+        margin-top:7px;
+        margin-bottom:7px;
+    }
 
-.select-parameters
-{
-    border: 1px solid purple;
-    padding:15px;
-    margin-top:20px;
-    margin-bottom:20px;
-}
+    .ques{
+        padding:5px;
+        margin-left:30px;
+    }
 
-.ques{
-    padding:10px;
-    margin-left:30px;
-}
+    .ans{
+        padding:5px;
+        margin-left:30px;
+    }
+    .col{
+        padding:0px;
+        margin:0px;
+    }
 
-.ans{
-    padding:10px;
-    margin-left:30px;
-}
-.col{
-    padding:0px;
-    margin:0px;
-}
-
-.option-card-div
-{
-    text-align:center;
-    margin-top:20px;
-    padding:3px;
-    border:1px solid lightblue;
-}
+    .option-card-div
+    {
+        text-align:center;
+        margin-top:7px;
+        padding:3px;
+        border:1px solid lightblue;
+    }
 
 
-.option-title
-{
-    padding-left: 7px;
-    padding-right:3px;
-}
+    .option-title
+    {
+        padding-left: 7px;
+        padding-right:3px;
+    }
 
-.content-md hr//Important
-{
-    background-color:black;
-}
+    .content-md hr//Important
+    {
+        background-color:black;
+    }
 
-.match-title
-{
-    padding-left: 6px;
-    padding-right:3px;
-}
+    .match-title
+    {
+        padding-left: 6px;
+        padding-right:3px;
+    }
 
-.option
-{
-    border:1px solid lightgreen;
-    margin-top:15px;
+    .option
+    {
+        border:1px solid lightgreen;
+        margin-top:5px;
+    }
+
+    #select-item
+    {
+        font-size:13px;
+        padding:0px;
+        margin:0px;
+        color:black;
+        font-weight: bold;
+        max-height:10%;
+    }
+
+    #heading{
+        font-size:16px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
 }

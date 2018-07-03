@@ -1,59 +1,48 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-      <ion-toolbar no-border-top>
-          <ion-buttons start>
-            <button ion-button icon-only>
-                <ion-icon id="icon" name="contact"></ion-icon>
-            </button>
-          </ion-buttons> 
-          <ion-title color="secondary">Add Question</ion-title>
-          <ion-buttons end>
-            <button  ion-button icon-end color="secondary">
-              <ion-icon id="icon" name="log-out"></ion-icon>
-            </button>
-          </ion-buttons>
-      </ion-toolbar>
-  </ion-navbar>
-</ion-header>
+
+    <ion-navbar color="primary">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Add Question</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
 
 
 <ion-content padding>
-  <div class="question-entry">
-    
-    <h4>Question Entry Option</h4>
+  <div class="question-entry" *ngIf="questionEntry" >    
+    <h4 id="heading">Question Entry Option</h4>
     
     <form [formGroup]="quesEntry">
-      <ion-item>
-        <ion-label>Board*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Board*</ion-label>
         <ion-select formControlName="inpBoard">
           <ion-option *ngFor="let br of board">{{br.alias}}</ion-option>
         </ion-select>
       </ion-item>
       
-      <ion-item>
-        <ion-label>Class*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Class*</ion-label>
         <ion-select formControlName="inpClass">
           <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
         </ion-select>
       </ion-item>
       
-      <ion-item>
-        <ion-label>Subject*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Subject*</ion-label>
         <ion-select formControlName="inpSubject">
           <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Topic*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Topic*</ion-label>
         <ion-select formControlName="inpTopic">
           <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Sub-Topic*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Sub-Topic*</ion-label>
         <ion-select formControlName="inpSubTopic">
           <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
         </ion-select>
@@ -63,24 +52,25 @@
 
   <hr>
   
-  <div class="select-parameters">
-    <h4>Select Parameters</h4>
+  <div class="show-button" *ngIf="!(questionEntry && selectParameters)"><button ion-button (click)="showForm()">Show Forms</button></div>
+  <div class="select-parameters" *ngIf="selectParameters">
+    <h4 id="heading">Select Parameters</h4>
     <form [formGroup]="quesDetails" >
-      <ion-item>
-        <ion-label>Question Type*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Question Type*</ion-label>
         <ion-select (ionChange)="check($event); resetForm()" formControlName="inpQType">
           <ion-option #subjective>Subjective</ion-option>
           <ion-option #objective>Objective</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Question Sub-Type*</ion-label>
-          <ion-select (ionChange)="checkOption($event); resetForm()" formControlName="inpQSubType">
+      <ion-item id="select-item">
+        <ion-label color="dark">Question Sub-Type*</ion-label>
+          <ion-select (ionChange)="checkOption($event); resetForm(); hideForm();" formControlName="inpQSubType">
             <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
           </ion-select>
           </ion-item>
-      <ion-item>
-        <ion-label>Skill Type*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Skill Type*</ion-label>
         <ion-select formControlName="inpSkillType">
           <ion-option [value]="1">Skill 1</ion-option>
           <ion-option [value]="2">Skill 2</ion-option>
@@ -88,16 +78,16 @@
           <ion-option [value]="4">Skill 4</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Level of Difficulty*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Level of Difficulty*</ion-label>
         <ion-select formControlName="inpDifficultyLevel">
           <ion-option [value]="Easy">Easy</ion-option>
           <ion-option [value]="Intermediate">Intermediate</ion-option>
           <ion-option [value]="Hard">Hard</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Suggested Marks*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Suggested Marks*</ion-label>
         <ion-select formControlName="inpMarks">
           <ion-option [value]="1">One</ion-option>
           <ion-option [value]="2">Two</ion-option>
@@ -105,8 +95,8 @@
           <ion-option [value]="4">Four</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Negative Marks</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Negative Marks</ion-label>
         <ion-select formControlName="inpNegMarks">
           <ion-option [value]="-1">-1</ion-option>
           <ion-option [value]="-2">-2</ion-option>
@@ -114,97 +104,97 @@
           <ion-option [value]="-4">-4</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Time Alloted(in Mins)*</ion-label>
-        <ion-select formControlName="inpTime">
+      <ion-item id="select-item">
+        <ion-label color="dark">Time Alloted(in Mins)*</ion-label>
+        <ion-select formControlName="inpTime" >
           <ion-option [value]="1">1</ion-option>
           <ion-option [value]="5">5</ion-option>
           <ion-option [value]="10">10</ion-option>
           <ion-option [value]="15">15</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Reference*</ion-label>
+      <ion-item id="select-item">
+        <ion-label color="dark">Reference*</ion-label>
         <ion-input formControlName="inpReference"></ion-input>
       </ion-item>
     </form>
   </div>
   <hr>
-  <h3>Question Details</h3>
+  <h3 id="heading">Question Details</h3>
       <div *ngIf="checkFill" class="details-div">
         <form [formGroup]="quesAns">
-          <h5>Type Question Here</h5>
+          <p id="heading">Type Question Here</p>
           <div class="ques"[froalaEditor] formControlName="question"></div>
-          <h5>Answer*</h5>
+          <h5 id="heading">Answer*</h5>
           <div class="ans"[froalaEditor] formControlName="answer"></div>
-          <h5>Explaination</h5>
+          <h5 id="heading">Explaination</h5>
           <div class="explaination"[froalaEditor] formControlName="explaination"></div>
         </form>
       </div>
 
       <div *ngIf="checkIdentify" class="details-div">
         <form [formGroup]="quesAns">
-          <h5>Identify the part of:*</h5>
+          <h5 id="heading">Identify the part of:*</h5>
           <div class="ques"[froalaEditor] formControlName="question"></div>
-          <h5>Answer*</h5>
+          <h5 id="heading">Answer*</h5>
           <div class="ans"[froalaEditor] formControlName="answer"></div>
-          <h5>Explaination:</h5>
+          <h5 id="heading">Explaination:</h5>
           <div class="explaination"[froalaEditor] formControlName="explaination"></div>
         </form>
     </div>
 
     <div *ngIf="checkOneLine" class="details-div">
       <form [formGroup]="quesAns">
-        <h5>Type your Question:*</h5>
+        <h5 id="heading">Type your Question:*</h5>
         <div class="ques"[froalaEditor] formControlName="question"></div>
-        <h5>Answer (One Line/One Word Answer Type):*</h5>
+        <h5 id="heading">Answer (One Line/One Word Answer Type):*</h5>
         <div class="ans"[froalaEditor] formControlName="answer"></div>
       </form>
       </div>
 
     <div *ngIf="checkVSA" class="details-div">
       <form [formGroup]="quesAns">
-        <h5>Type your Question:*</h5>
+        <h5 id="heading">Type your Question:*</h5>
         <div class="ques"[froalaEditor] formControlName="question"></div>
-        <h5>Answer (Very Short Answer Type):*</h5>
+        <h5 id="heading">Answer (Very Short Answer Type):*</h5>
         <div class="ans"[froalaEditor] formControlName="answer"></div>
       </form>
     </div>
 
     <div *ngIf="checkSA" class="details-div">
       <form [formGroup]="quesAns">
-        <h5>Type your Question:*</h5>
+        <h5 id="heading">Type your Question:*</h5>
         <div class="ques" [froalaEditor] formControlName="question"></div>
-        <h5>Answer (Short Answer Type):*</h5>
+        <h5 id="heading">Answer (Short Answer Type):*</h5>
         <div class="ans" [froalaEditor] formControlName="answer"></div>
       </form>
       </div>
 
     <div *ngIf="checkLA" class="details-div">
       <form [formGroup]="quesAns">
-        <h5>Type your Question:*</h5>
+        <h5 id="heading">Type your Question:*</h5>
         <div class="ques" [froalaEditor] formControlName="question"></div>
-        <h5>Answer:*</h5>
+        <h5 id="heading">Answer:*</h5>
         <div class="ans" [froalaEditor] formControlName="answer"></div>
       </form>
       </div>
 
     <div *ngIf="checkVLA" class="details-div">
     <form [formGroup]="quesAns">
-        <h5>Type your Question:*</h5>
+        <h5 id="heading">Type your Question:*</h5>
         <div class="ques" [froalaEditor] formControlName="question"></div>
-        <h5>Answer (Very Long Answer Type):*</h5>
+        <h5 id="heading">Answer (Very Long Answer Type):*</h5>
         <div class="ans" [froalaEditor] formControlName="answer"></div>
       </form>
     </div>
 
     <div *ngIf="checkMcqSingle" class="details-div">
     <form [formGroup]="objectiveQuesAns">
-      <h5>Type Question:*</h5>
+      <h5 id="heading">Type Question:*</h5>
         <div class="ques"[froalaEditor] formControlName="question"></div>
         <ion-grid radio-group formControlName="answer">
           <ion-list-header>
-            <h3>MCQ(Single Response)</h3>
+            <h3 id="heading">MCQ(Single Response)</h3>
           </ion-list-header>
       
           <ion-row>
@@ -257,7 +247,7 @@
 
     <div *ngIf="checkMcqMultiple" class="details-div">
         <h5>Type Question:*</h5>
-        <form [formGroup]="multipleMCQ">
+        <form >
           <div class="ques"[froalaEditor] formControlName="question"></div>
           <ion-grid>
             <ion-list-header>

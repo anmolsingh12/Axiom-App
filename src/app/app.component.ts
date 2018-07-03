@@ -9,6 +9,7 @@ import {PopoverComponent } from '../components/popover/popover';
 import {AddQuestionPage} from '../pages/add-question/add-question';
 import {QuestionBankPage} from '../pages/question-bank/question-bank';
 import {BulkUploadPage} from '../pages/bulk-upload/bulk-upload';
+import { ReviewAddedQuestionsPage } from '../pages/review-added-questions/review-added-questions';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class MyApp {
           child: [{name:'Question Bank', component:QuestionBankPage},
                   {name:'Bulk upload', component:BulkUploadPage},
                    {name:'Add Question', component:AddQuestionPage},
-                   {name:'Review', component:null }]
+                   {name:'Review', component:ReviewAddedQuestionsPage }]
       },
       
       { title: 'Question Paper', 

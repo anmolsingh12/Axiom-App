@@ -7,6 +7,10 @@ import { HomePage } from '../pages/home/home';
 import {AddQuestionPage} from '../pages/add-question/add-question';
 import {QuestionBankPage} from '../pages/question-bank/question-bank';
 import {BulkUploadPage} from '../pages/bulk-upload/bulk-upload'
+import {ModalPage} from '../pages/modal/modal';
+import { ReviewAddedQuestionsPage } from '../pages/review-added-questions/review-added-questions';
+import { ReviewObjectiveQuestionPage } from '../pages/review-objective-question/review-objective-question'
+import { ReviewSubjectiveQuestionPage } from '../pages/review-subjective-question/review-subjective-question'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +28,11 @@ import { FileChooser } from '@ionic-native/file-chooser';
     PopoverComponent,
     AddQuestionPage,
     QuestionBankPage,
-    BulkUploadPage
+    BulkUploadPage,
+    ModalPage,
+    ReviewAddedQuestionsPage,
+    ReviewObjectiveQuestionPage,
+    ReviewSubjectiveQuestionPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,11 @@ import { FileChooser } from '@ionic-native/file-chooser';
     AddQuestionPage,
     QuestionBankPage,
     PopoverComponent,
-    BulkUploadPage
+    BulkUploadPage,
+    ModalPage,
+    ReviewAddedQuestionsPage,
+    ReviewObjectiveQuestionPage,
+    ReviewSubjectiveQuestionPage
   ],
   providers: [
     StatusBar,

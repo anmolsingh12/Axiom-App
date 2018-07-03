@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { ModalPage } from '../modal/modal';
+import { ModalController } from 'ionic-angular';
 /**
  * Generated class for the QuestionBankPage page.
  *
@@ -21,10 +22,15 @@ export class QuestionBankPage {
   topic:Array<{name:string}>;
   sub_topic:Array<{name:string}>;
   qSubType:Array<{name:any}>;
+  questions:Array<{num:number, question:string, answer:string}>
+  questionEntry:boolean = true;
+
+  check_form_fill:boolean=false;
+
 
   private quesBankDetails:FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public modalCtrl: ModalController) {
 
     this.class = [{name:'I', value:'1'},
                   {name:'II', value:'2'},
@@ -45,6 +51,9 @@ export class QuestionBankPage {
 
     this.sub_topic = [{name:'Sub-Topic 1'}, {name : 'Sub-Topic 2'}, {name : 'Sub-Topic 3'}, {name : 'Sub-Topic 4'}];
 
+    this.questions = [{num:1, question:'Who is the Prime Minister of India?', answer:'Mr. Narendra Damodardas Modi'},
+                      {num:2, question:'Who is the President of india?', answer:'Mr. Ram Nath Kovind'}];
+
     this.quesBankDetails = this.formBuilder.group(
       {
         inpQType:[''],
@@ -56,9 +65,26 @@ export class QuestionBankPage {
       });
   }
 
+  openModal(num:any) {
+    console.log(num);
+    let modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+  }
+
   logForm()
   {
     console.log(this.quesBankDetails.value);
+    this.check_form_fill = true;
+  }
+
+  hideForm()
+  {
+    this.questionEntry = false;
+  }
+
+  showForm()
+  {
+    this.questionEntry = true;
   }
 
   check(value:any)
@@ -81,6 +107,7 @@ export class QuestionBankPage {
                       {name:'True/False'},
                       {name:'Match The Followings'},
                       {name:'Matrix Match'}]; 
+    
     }    
   }
 

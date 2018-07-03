@@ -36,7 +36,8 @@ export class AddQuestionPage
   checkTF:boolean = false;
   checkMatch:boolean = false;
   checkMatrix:boolean = false;
-
+  questionEntry:boolean = true;
+  selectParameters:boolean = true;
 
   // form:Array<{brd:string, class:string, subject:string, topic:string,
   //              subtopic:string, qType:string, qSubType:string, skillType:string,
@@ -158,6 +159,19 @@ export class AddQuestionPage
   resetForm()
   {
     this.quesAns.reset();
+  }
+
+  hideForm()
+  {
+    this.selectParameters = false;
+    this.questionEntry = false;
+  }
+
+  showForm()
+  {
+    this.selectParameters = true;
+    this.questionEntry = true;
+
   }
 
 

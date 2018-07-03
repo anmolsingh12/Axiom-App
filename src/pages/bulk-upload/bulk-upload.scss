@@ -1,17 +1,32 @@
 page-bulk-upload {
+    .generate-question-template-form
+    {
+        border: 1px solid greenyellow;
+        padding:5px;
+        margin:7px;
+    }
 
-}
+    .generate-button
+    {
+        padding:5px;
+        margin-left:30px;
+        margin-top:15px;
+    }
 
-.generate-question-template-form
-{
-    border: 1px solid greenyellow;
-    padding:15px;
-    margin:20px;
-}
+    #select-item
+    {
+        font-size:13px;
+        padding:0px;
+        margin:0px;
+        color:black;
+        font-weight: bold;
+        max-height:10%;
+    }
 
-.generate-button
-{
-    padding:10;
-    margin-left:30px;
-    margin-top:15px;
+    #heading{
+        font-size:16px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+
 }

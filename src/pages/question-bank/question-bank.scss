@@ -1,10 +1,90 @@
 page-question-bank {
-
+    
 }
 
-.question-entry
-{
-    border: 1px solid greenyellow;
-    padding:15px;
-    margin-bottom:20px;
-}
+    .question-entry
+    {
+        border: 1px solid greenyellow;
+        padding:15px;
+        margin-bottom:20px;
+    }
+
+    .table-header
+    {
+        border:1px solid gray;
+    }
+
+    .result
+    {
+        border:1px solid purple;
+    }
+
+    .icon
+    {
+        font-size:18px;
+    }
+
+    .card-title
+    {
+        font-size:15px;
+        margin-left: 15px;
+    }
+    .card-header
+    {
+        padding:0;
+        margin:0;
+    }
+
+    .filter{
+        margin-bottom:10px;
+    }
+
+    .result
+    {
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+    .questions{
+        font-size: 16px;
+    }
+
+    .card
+    {
+        box-shadow: 0 6px 10px 0 gray;
+        margin-top:15px;
+        margin-bottom:15px;
+        border:1px solid black;
+    }
+
+    .card-text-1
+    {
+        font-size:15px;
+        padding-left:15px;
+    }
+
+    .card-text-2
+    {
+        font-size:15px;
+    }
+
+    .answer
+    {
+        margin-bottom: 10px;
+    }
+
+    #select-item
+    {
+        font-size:13px;
+        padding:0px;
+        margin:0px;
+        color:black;
+        font-weight: bold;
+        max-height:10%;
+    }
+
+    #heading{
+        font-size:16px;
+        font-weight:bold;
+        text-decoration: underline;
+    }
+    
