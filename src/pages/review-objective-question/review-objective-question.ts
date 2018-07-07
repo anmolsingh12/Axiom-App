@@ -17,11 +17,14 @@ export class ReviewObjectiveQuestionPage {
   
   private reviewQuestionsForm:FormGroup;
 
-  qSubType:Array<{name:any}>;
-  class:Array<{name:string, value:string}>;
-  subject:Array<{name:string}>;
-  topic:Array<{name:string}>;
-  sub_topic:Array<{name:string}>;
+  class:any[];
+  qType:any[];
+  subject:any[];
+  topic:any[];
+  sub_topic:any[];
+  qSubType:any[];
+  questions:any[];
+  
   singleMCQQuestions:Array<{num:number, question:string,options:options[], correctOption:string}>
   multipleMCQQuestions:Array<{num:number, question:string,options:options[], correctOptions:string[]}>
   formShow:boolean = true;

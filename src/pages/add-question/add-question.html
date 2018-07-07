@@ -17,34 +17,34 @@
     <form [formGroup]="quesEntry">
       <ion-item id="select-item">
         <ion-label color="dark">Board*</ion-label>
-        <ion-select formControlName="inpBoard">
-          <ion-option *ngFor="let br of board">{{br.alias}}</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpBoard">
+          <ion-option *ngFor="let brd of board" [value]="brd.board_id">{{brd.board_alias}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item id="select-item">
         <ion-label color="dark">Class*</ion-label>
-        <ion-select formControlName="inpClass">
-          <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpClass" (ionChange)="getSubject($event)">
+          <ion-option *ngFor="let cls of class" [value]="cls.class_id">{{cls.class_name}}</ion-option>
         </ion-select>
       </ion-item>
       
       <ion-item id="select-item">
         <ion-label color="dark">Subject*</ion-label>
-        <ion-select formControlName="inpSubject">
-          <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpSubject" (ionChange)="getTopic($event)">
+          <ion-option *ngFor="let sub of subject" [value]="sub.sub_id">{{sub.sub_name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Topic*</ion-label>
-        <ion-select formControlName="inpTopic">
-          <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpTopic" (ionChange)="getSubTopic($event)">
+          <ion-option *ngFor="let top of topic" [value]="top.topic_id">{{top.topic_name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Sub-Topic*</ion-label>
-        <ion-select formControlName="inpSubTopic">
-          <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpSubTopic">
+          <ion-option *ngFor="let s_top of sub_topic" [value]="s_top.st_id">{{s_top.st_name}}</ion-option>
         </ion-select>
       </ion-item>
       </form>
@@ -58,59 +58,44 @@
     <form [formGroup]="quesDetails" >
       <ion-item id="select-item">
         <ion-label color="dark">Question Type*</ion-label>
-        <ion-select (ionChange)="check($event); resetForm()" formControlName="inpQType">
-          <ion-option #subjective>Subjective</ion-option>
-          <ion-option #objective>Objective</ion-option>
+        <ion-select interface="action-sheet" (ionChange)="getQSubType($event); resetForm()" formControlName="inpQType">
+          <ion-option *ngFor="let q of qType" [value]="q.qt_id">{{q.qt_name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Question Sub-Type*</ion-label>
-          <ion-select (ionChange)="checkOption($event); resetForm(); hideForm();" formControlName="inpQSubType">
-            <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
+          <ion-select interface="action-sheet" (ionChange)="checkOption($event); resetForm(); getSkill(); getDifficulty();" formControlName="inpQSubType">
+            <ion-option *ngFor="let item of qSubType" [value]="item.qst_id">{{item.qst_name}}</ion-option>   
           </ion-select>
           </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Skill Type*</ion-label>
-        <ion-select formControlName="inpSkillType">
-          <ion-option [value]="1">Skill 1</ion-option>
-          <ion-option [value]="2">Skill 2</ion-option>
-          <ion-option [value]="3">Skill 3</ion-option>
-          <ion-option [value]="4">Skill 4</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpSkillType">
+          <ion-option *ngFor="let skill of skillData" [value]="skill.skill_id">{{skill.skill_name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Level of Difficulty*</ion-label>
-        <ion-select formControlName="inpDifficultyLevel">
-          <ion-option [value]="Easy">Easy</ion-option>
-          <ion-option [value]="Intermediate">Intermediate</ion-option>
-          <ion-option [value]="Hard">Hard</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpDifficultyLevel">
+          <ion-option *ngFor="let lod of difficultyLevel" [value]="lod.dl_id">{{lod.dl_name}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Suggested Marks*</ion-label>
-        <ion-select formControlName="inpMarks">
-          <ion-option [value]="1">One</ion-option>
-          <ion-option [value]="2">Two</ion-option>
-          <ion-option [value]="3">Three</ion-option>
-          <ion-option [value]="4">Four</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpMarks">
+          <ion-option *ngFor="let mr of marks">{{mr.value}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Negative Marks</ion-label>
-        <ion-select formControlName="inpNegMarks">
-          <ion-option [value]="-1">-1</ion-option>
-          <ion-option [value]="-2">-2</ion-option>
-          <ion-option [value]="-3">-3</ion-option>
-          <ion-option [value]="-4">-4</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpNegMarks">
+          <ion-option *ngFor="let neg of negMarks">{{neg.value}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
         <ion-label color="dark">Time Alloted(in Mins)*</ion-label>
-        <ion-select formControlName="inpTime" >
-          <ion-option [value]="1">1</ion-option>
-          <ion-option [value]="5">5</ion-option>
-          <ion-option [value]="10">10</ion-option>
-          <ion-option [value]="15">15</ion-option>
+        <ion-select interface="action-sheet" formControlName="inpTime" (ionChange)="hideForm();">
+          <ion-option *ngFor="let t of time">{{t.value}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item id="select-item">
@@ -782,6 +767,7 @@
       </ion-grid>
       </div>
       <!--"-->
-      <button ion-button type="submit" (click)="logForm()" >Submit</button>
+      <br>
+      <button ion-button type="submit" (click)="logForm(); addSubjectiveQuestion();" >Submit</button>
       <input ion-button color="danger" type=reset value="Reset">
 </ion-content>

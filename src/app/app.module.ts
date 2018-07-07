@@ -18,6 +18,8 @@ import {PopoverComponent} from '../components/popover/popover';
 import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { FileChooser } from '@ionic-native/file-chooser';
+import {DataServiceProvider} from '../providers/data-service/data-service';
+import { HttpModule } from '@angular/http';
 
 
 
@@ -32,13 +34,14 @@ import { FileChooser } from '@ionic-native/file-chooser';
     ModalPage,
     ReviewAddedQuestionsPage,
     ReviewObjectiveQuestionPage,
-    ReviewSubjectiveQuestionPage
+    ReviewSubjectiveQuestionPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    FroalaViewModule.forRoot(),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,7 +60,9 @@ import { FileChooser } from '@ionic-native/file-chooser';
     StatusBar,
     SplashScreen,
     FileChooser,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DataServiceProvider,
+    
   ]
 })
 export class AppModule {}

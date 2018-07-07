@@ -15,47 +15,44 @@
   <form [formGroup]="quesBankDetails">
     <ion-item id="select-item">
       <ion-label color="dark">Question Type*</ion-label>
-      <ion-select (ionChange)="check($event);" formControlName="inpQType">
-        <ion-option #subjective>Subjective</ion-option>
-        <ion-option #objective>Objective</ion-option>
+      <ion-select interface="action-sheet" (ionChange)="getQSubType($event);" formControlName="inpQType">
+        <ion-option *ngFor="let q of qType" [value]="q.qt_id">{{q.qt_name}}</ion-option>
       </ion-select>
     </ion-item>
     
     <ion-item id="select-item">
       <ion-label color="dark">Question Sub-Type*</ion-label>
-        <ion-select formControlName="inpQSubType">
-          <ion-option *ngFor="let item of qSubType" [value]="item.name">{{item.name}}</ion-option>   
+        <ion-select interface="action-sheet" formControlName="inpQSubType">
+          <ion-option *ngFor="let item of qSubType" [value]="item.qst_id">{{item.qst_name}}</ion-option>   
         </ion-select>
-    </ion-item>
+        </ion-item>
   
-    <ion-item id="select-item">
-      <ion-label color="dark">Class*</ion-label>
-        <ion-select formControlName="inpClass">
-          <ion-option *ngFor="let cls of class">{{cls.name}}</ion-option>
-        </ion-select>
-    </ion-item>
-      
-    <ion-item id="select-item">
-      <ion-label color="dark">Subject*</ion-label>
-        <ion-select formControlName="inpSubject">
-          <ion-option *ngFor="let sub of subject">{{sub.name}}</ion-option>
-        </ion-select>
-    </ion-item>
-    
-    <ion-item id="select-item">
-      <ion-label color="dark">Topic*</ion-label>
-        <ion-select formControlName="inpTopic">
-          <ion-option *ngFor="let top of topic">{{top.name}}</ion-option>
-        </ion-select>
-    </ion-item>
-    
-    <ion-item id="select-item">
-      <ion-label color="dark">Sub-Topic*</ion-label>
-        <ion-select formControlName="inpSubTopic">
-          <ion-option *ngFor="let s_top of sub_topic">{{s_top.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <button ion-button type="submit" (click)="logForm(); hideForm()">Apply</button>
+        <ion-item id="select-item">
+          <ion-label color="dark">Class*</ion-label>
+          <ion-select interface="action-sheet" formControlName="inpClass" (ionChange)="getSubject($event)">
+            <ion-option *ngFor="let cls of class" [value]="cls.class_id">{{cls.class_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item id="select-item">
+          <ion-label color="dark">Subject*</ion-label>
+          <ion-select interface="action-sheet" formControlName="inpSubject" (ionChange)="getTopic($event)">
+            <ion-option *ngFor="let sub of subject" [value]="sub.sub_id">{{sub.sub_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item id="select-item">
+          <ion-label color="dark">Topic*</ion-label>
+          <ion-select interface="action-sheet" formControlName="inpTopic" (ionChange)="getSubTopic($event)">
+            <ion-option *ngFor="let top of topic" [value]="top.topic_id">{{top.topic_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item id="select-item">
+          <ion-label color="dark">Sub-Topic*</ion-label>
+          <ion-select interface="action-sheet" formControlName="inpSubTopic">
+            <ion-option *ngFor="let s_top of sub_topic" [value]="s_top.st_id">{{s_top.st_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      <button ion-button type="submit" (click)="logForm(); hideForm(); getAllQuestions();">Apply</button>
       <button ion-button color="danger" type=reset >Reset</button>
     </form>
   </div>  
@@ -72,7 +69,7 @@
   <div class="result" *ngIf="check_form_fill">
       <ion-card *ngFor="let ques of questions" class="card">
           <ion-toolbar class="card-header">
-              <span class="card-title">Q No.: {{ques.num}}</span> 
+              <span class="card-title">Q No.: {{ques.qus_id}}</span> 
               <ion-buttons end>
                 <button  ion-button icon-end >
                   <ion-icon class="icon" name="thumbs-down"></ion-icon>
@@ -83,22 +80,13 @@
               </ion-buttons>
           </ion-toolbar>
           <ion-row class="question">
-              <ion-col col-4>
-                  <strong><span class="card-text-1" >Question :</span></strong>
-                </ion-col>
-                
-                <ion-col col-8>
-                  <span class="card-text-2">{{ques.question}}</span>
-                </ion-col>
+            <strong><span class="card-text-1" >Question :</span></strong>
+            <span class="card-text-2"><div [innerHTML]="ques.qus_name"></div></span>
           </ion-row>
           <br>
           <ion-row class="answer">
-            <ion-col col-4>
-                <strong><span class="card-text-1">Answer :</span></strong>
-            </ion-col>
-            <ion-col col-8>
-                <span class="card-text-2">{{ques.answer}}</span>
-              </ion-col>
+            <strong><span class="card-text-1">Answer :</span></strong>
+            <span class="card-text-2">{{ques.qopt_answer}}</span>
             </ion-row>
             <!--ion-row class="answer">
                 <ion-item>

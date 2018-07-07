@@ -110,6 +110,11 @@ export class MyApp {
       ev: myEvent
     });
   }
+
+  openHome()
+  {
+    this.nav.setRoot(HomePage);
+  }
 }
 
 export interface child {

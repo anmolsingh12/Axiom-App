@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import {DataServiceProvider} from '../../providers/data-service/data-service';
+import { HttpClient } from '@angular/common/http';
 @IonicPage()
 @Component({
   selector: 'page-add-question',
   templateUrl: 'add-question.html',
+  providers:[HttpClient]
 })
 
 export class AddQuestionPage 
@@ -16,14 +18,22 @@ export class AddQuestionPage
   private objectiveQuesAns:FormGroup;
   //private multipleMCQ:FormGroup;
 
-  board:Array<{name:string, alias:string }>;
-  class:Array<{name:string, value:string}>;
-  subject:Array<{name:string}>;
-  topic:Array<{name:string}>;
-  sub_topic:Array<{name:string}>;
-  qSubType:Array<{name:any}>;
-  subjective:boolean = false;
-  objective:boolean = false;
+  board:any[];
+  class:any[];
+  subject:any[];
+  topic:any[];
+  sub_topic:any[];
+
+  qType:any[];
+  qSubType:any[];
+  skillData:any[];
+  difficultyLevel:any[];
+  answer:any;
+
+  marks:Array<{value:string}>;
+  negMarks:Array<{value:string}>;
+  time:Array<{value:string}>;
+
   checkFill:boolean = false;
   checkIdentify:boolean = false;
   checkOneLine:boolean = false;
@@ -39,15 +49,9 @@ export class AddQuestionPage
   questionEntry:boolean = true;
   selectParameters:boolean = true;
 
-  // form:Array<{brd:string, class:string, subject:string, topic:string,
-  //              subtopic:string, qType:string, qSubType:string, skillType:string,
-  //              difficultyLevel:string, marks:number, negativeMarks:number, time:number,
-  //              reference:string}>;
-
-  questionDetails:Array<{question:string, answer:string, explaination:string}>;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private dataService:DataServiceProvider) 
   {
+    
     this.quesEntry = this.formBuilder.group(
       {
         inpBoard: [''],
@@ -86,7 +90,36 @@ export class AddQuestionPage
             correctOption:[''],
             answer:['']
           }
+          
         );
+        this.marks = [{value:"1"},
+                      {value:"2"},
+                      {value:"3"},
+                      {value:"4"},
+                      {value:"5"},
+                      {value:"6"},
+                      {value:"7"},
+                      {value:"8"},
+                      {value:"9"},
+                      {value:"10"}]
+
+        this.negMarks = [{value:"-1"},
+                          {value:"-2"},
+                          {value:"-3"},
+                          {value:"-4"},
+                          {value:"-5"},
+                          {value:"-6"},]
+        
+        this.time = [{value:"1"},
+                          {value:"2"},
+                          {value:"3"},
+                          {value:"4"},
+                          {value:"5"},
+                          {value:"6"},
+                          {value:"7"},
+                          {value:"8"},
+                          {value:"9"},
+                          {value:"10"}]
 
         // this.multipleMCQ = this.formBuilder.group(
         //   {
@@ -99,33 +132,142 @@ export class AddQuestionPage
         //     answer:['']
         //   }
         // );
+  }
 
-     
-  
-    this.board = [{name:'Central Board of Secondary Education', alias:'CBSE'},
-                  {name: 'Indian School Certificate Examinations', alias:'ICSE'},
-                  {name:'Andhra Pradesh Board of Secondary Education', alias:'APBSE'},
-                  {name:'Board of Higher Secondary Education', alias:'BHSE'}];
-  
-    this.class = [{name:'I', value:'1'},
-                  {name:'II', value:'2'},
-                  {name:'III', value:'3'},
-                  {name:'IV', value:'4'},
-                  {name:'V', value:'5'},
-                  {name:'VI', value:'6'},
-                  {name:'VII', value:'7'},
-                  {name:'VIII', value:'8'},
-                  {name:'IX', value:'9'},
-                  {name:'X', value:'10'},
-                  {name:'XI', value:'11'},
-                  {name:'XII', value:'12'}];
-    
-    this.subject = [{name:'Subject 1'}, {name : 'Subject 2'}, {name : 'Subject 3'}, {name : 'Subject 4'}];
+  getAllBoard() :void
+  {
+    this.dataService.getBoard().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.board = result.data;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
-    this.topic = [{name:'Topic 1'}, {name : 'Topic 2'}, {name : 'Topic 3'}, {name : 'Topic 4'}];
+  getAllClass():void
+  {
+    this.dataService.getClass().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.class = result.data;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
-    this.sub_topic = [{name:'Sub-Topic 1'}, {name : 'Sub-Topic 2'}, {name : 'Sub-Topic 3'}, {name : 'Sub-Topic 4'}];
-                  
+  getSubject(classId:any)
+  {
+    this.dataService.getSubjectByClass(classId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.subject = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTopic(subId:any)
+  {
+    let classId:any;      
+    for(let cls of this.class)
+    {
+      if(this.quesEntry.value.inpClass == cls.class_name)
+      {
+        classId = cls.class_id;
+      }
+    }
+    this.dataService.getTopicByClassSubject(classId, subId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.topic = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSubTopic(topId:any)
+  {
+    this.dataService.getSubtopicByTopic(topId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.sub_topic = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQuestionType()
+  {
+    this.dataService.getQType().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQSubType(qId:any)
+  {
+    this.dataService.getQuestionSubtypeDataByQuestiontype(qId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qSubType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getSkill()
+  {
+    this.dataService.getSkillData().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.skillData = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+    );
+  }
+
+  getDifficulty()
+  {
+    this.dataService.getAllDifficulties().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.difficultyLevel = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+    );
   }
 
   
@@ -156,6 +298,37 @@ export class AddQuestionPage
     console.log(this.objectiveQuesAns.value);
   }
 
+  
+  addSubjectiveQuestion()
+  {
+    this.answer = {qopt_answer:this.quesAns.value.answer};
+    this.dataService.addSubjectiveQuestions(
+      this.quesEntry.value.inpBoard,
+      this.quesEntry.value.inpClass,
+      this.quesEntry.value.inpSubject,
+      this.quesEntry.value.inpTopic,
+      this.quesEntry.value.inpSubTopic,
+      this.quesDetails.value.inpQType,
+      this.quesDetails.value.inpQSubType,
+      this.quesDetails.value.inpSkillType,
+      this.quesDetails.value.inpDifficultyLevel,
+      this.quesDetails.value.inpMarks,
+      this.quesDetails.value.inpNegMarks,
+      this.quesDetails.value.inpTime,
+      this.quesDetails.value.inpReference,
+      this.quesAns.value.question,
+      this.quesAns.value.explaination,
+      this.answer,
+      this.quesAns.value.answer,
+    ).subscribe(
+      result => {
+      },
+    error => {
+      console.log(error);
+    }
+    );
+  }
+
   resetForm()
   {
     this.quesAns.reset();
@@ -181,32 +354,10 @@ export class AddQuestionPage
   //   console.log(this.quesDetails.value);
   // }
 
-  check(value:any)
-  {  
-    console.log(value);
-    if(value =="Subjective")
-    {
-      this.qSubType = [{name:'Fill in The Blanks'},
-                      {name:'Identify'},
-                      {name:'One Line'},
-                      {name:'Very Short Answer'},
-                      {name:'Short Answer'},
-                      {name:'Long Answer'},
-                      {name:'Very Long Answer'}];
-    }   
-    if(value =="Objective")
-    {
-      this.qSubType = [{name:'MCQ Single Response'},
-                      {name:'MCQ Multiple Response'},
-                      {name:'True/False'},
-                      {name:'Match The Followings'},
-                      {name:'Matrix Match'}]; 
-    }    
-  }
-
   checkOption(val:any)
   {
-    if(val == "Fill in The Blanks")
+    console.log(val);
+    if(val == "6")
     {
       this.checkFill = true;
       this.checkIdentify = false;
@@ -222,7 +373,7 @@ export class AddQuestionPage
       this.checkMatrix = false;
     }
 
-    else if(val == "Identify")
+    else if(val == "7")
     {
       this.checkIdentify = true;
       this.checkFill = false;
@@ -238,7 +389,7 @@ export class AddQuestionPage
       this.checkTF = false;
     }
     
-    else if(val == "One Line")
+    else if(val == "8")
     {
       this.checkOneLine = true;
       this.checkFill = false;
@@ -254,7 +405,7 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;
     }
 
-    else if(val == "Very Short Answer")
+    else if(val == "9")
     {
       this.checkVSA = true;
       this.checkOneLine = false;
@@ -270,29 +421,13 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;
     }
 
-    else if(val == "Short Answer")
+    else if(val == "10")
     {
-      this.checkVSA = true;
+      this.checkSA = true;
       this.checkOneLine = false;
       this.checkFill = false;
       this.checkIdentify = false;
-      this.checkSA = false;
-      this.checkTF = false;
-      this.checkLA = false;
-      this.checkVLA = false;
-      this.checkMatrix = false;
-      this.checkMatch = false;
-      this.checkMcqSingle = false;
-      this.checkMcqMultiple = false;
-    }
-
-    else if(val == "Very Short Answer")
-    {
-      this.checkVSA = true;
-      this.checkOneLine = false;
-      this.checkFill = false;
-      this.checkIdentify = false;
-      this.checkSA = false;
+      this.checkVSA = false;
       this.checkLA = false;
       this.checkTF = false;
       this.checkVLA = false;
@@ -302,7 +437,7 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;
     }
 
-    else if(val == "Long Answer")
+    else if(val == "11")
     {
       this.checkLA = true;
       this.checkVSA = false;
@@ -318,7 +453,7 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;   
     }
 
-    else if(val == "Very Long Answer")
+    else if(val == "12")
     {
       this.checkVLA = true;
       this.checkLA = false;
@@ -417,6 +552,9 @@ export class AddQuestionPage
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddQuestionPage');
+    this.getAllBoard();
+    this.getAllClass();
+    this.getQuestionType();
   }
 
 }

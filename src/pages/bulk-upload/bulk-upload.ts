@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {DataServiceProvider} from '../../providers/data-service/data-service';
 
 @IonicPage()
 @Component({
@@ -10,41 +11,25 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class BulkUploadPage {
 
-  board:Array<{name:string, alias:string }>;
-  class:Array<{name:string, value:string}>;
-  subject:Array<{name:string}>;
-  topic:Array<{name:string}>;
-  sub_topic:Array<{name:string}>;
-  qSubType:Array<{name:any}>;
+  board:any[];
+  class:any[];
+  subject:any[];
+  topic:any[];
+  sub_topic:any[];
+
+  qType:any[];
+  qSubType:any[];
+  skillData:any[];
+  difficultyLevel:any[];
 
   private questionTemplateGeneratorForm:FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fileChooser: FileChooser, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              private fileChooser: FileChooser, 
+              private formBuilder: FormBuilder,
+              private dataService:DataServiceProvider) {
     
-    this.board = [{name:'Central Board of Secondary Education', alias:'CBSE'},
-                  {name: 'Indian School Certificate Examinations', alias:'ICSE'},
-                  {name:'Andhra Pradesh Board of Secondary Education', alias:'APBSE'},
-                  {name:'Board of Higher Secondary Education', alias:'BHSE'}];
-    
-    this.class = [{name:'I', value:'1'},
-                  {name:'II', value:'2'},
-                  {name:'III', value:'3'},
-                  {name:'IV', value:'4'},
-                  {name:'V', value:'5'},
-                  {name:'VI', value:'6'},
-                  {name:'VII', value:'7'},
-                  {name:'VIII', value:'8'},
-                  {name:'IX', value:'9'},
-                  {name:'X', value:'10'},
-                  {name:'XI', value:'11'},
-                  {name:'XII', value:'12'}];
-    
-    this.subject = [{name:'Subject 1'}, {name : 'Subject 2'}, {name : 'Subject 3'}, {name : 'Subject 4'}];
-
-    this.topic = [{name:'Topic 1'}, {name : 'Topic 2'}, {name : 'Topic 3'}, {name : 'Topic 4'}];
-
-    this.sub_topic = [{name:'Sub-Topic 1'}, {name : 'Sub-Topic 2'}, {name : 'Sub-Topic 3'}, {name : 'Sub-Topic 4'}];
-
     this.questionTemplateGeneratorForm = this.formBuilder.group(
       {
         inpBoard:[''],
@@ -59,33 +44,172 @@ export class BulkUploadPage {
       });
   }
 
+  getAllBoard() :void
+  {
+    this.dataService.getBoard().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.board = result.data;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getAllClass():void
+  {
+    this.dataService.getClass().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.class = result.data;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSubject(classId:any)
+  {
+    this.dataService.getSubjectByClass(classId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.subject = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTopic(subId:any)
+  {
+    let classId:any;      
+    for(let cls of this.class)
+    {
+      if(this.questionTemplateGeneratorForm.value.inpClass == cls.class_name)
+      {
+        classId = cls.class_id;
+      }
+    }
+    this.dataService.getTopicByClassSubject(classId, subId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.topic = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSubTopic(topId:any)
+  {
+    this.dataService.getSubtopicByTopic(topId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.sub_topic = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQuestionType()
+  {
+    this.dataService.getQType().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQSubType(qId:any)
+  {
+    this.dataService.getQuestionSubtypeDataByQuestiontype(qId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qSubType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getSkill()
+  {
+    this.dataService.getSkillData().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.skillData = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+    );
+  }
+
+  getDifficulty()
+  {
+    this.dataService.getAllDifficulties().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.difficultyLevel = result.data;
+          console.log(this.difficultyLevel);
+        }
+      },
+    error => {
+      console.log(error);
+    }
+    );
+  }
+
+  generateExcelSheet()
+  {
+    console.log("In function");
+    let board_id:string = this.questionTemplateGeneratorForm.value.inpBoard;
+    let class_id:string = this.questionTemplateGeneratorForm.value.inpClass;
+    let sub_id:string = this.questionTemplateGeneratorForm.value.inpSubject;
+    let topic_id:string = this.questionTemplateGeneratorForm.value.inpTopic;
+    let st_id:string = this.questionTemplateGeneratorForm.value.inpQSubType;
+    let qt_id:string = this.questionTemplateGeneratorForm.value.inpQType;
+    let qst_id:string = this.questionTemplateGeneratorForm.value.inpQSubType;
+    let skill_id:string = this.questionTemplateGeneratorForm.value.inpSkillType;
+    let dl_id:string = this.questionTemplateGeneratorForm.value.inpDifficultyLevel;
+    
+    this.dataService.generateExcelFile( board_id, class_id, sub_id, topic_id, st_id, qt_id, qst_id, skill_id, dl_id).subscribe(
+      result => {
+        console.log(result);
+      },
+    error => {
+      console.log(error);
+    }
+    );
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad BulkUploadPage');
+    this.getAllBoard();
+    this.getAllClass();
+    this.getQuestionType();
   }
-
-  check(value:any)
-  {  
-    console.log(value);
-    if(value =="Subjective")
-    {
-      this.qSubType = [{name:'Fill in The Blanks'},
-                      {name:'Identify'},
-                      {name:'One Line'},
-                      {name:'Very Short Answer'},
-                      {name:'Short Answer'},
-                      {name:'Long Answer'},
-                      {name:'Very Long Answer'}];
-    }   
-    if(value =="Objective")
-    {
-      this.qSubType = [{name:'MCQ Single Response'},
-                      {name:'MCQ Multiple Response'},
-                      {name:'True/False'},
-                      {name:'Match The Followings'},
-                      {name:'Matrix Match'}]; 
-    }    
-  }
-
   logForm()
   {
     console.log(this.questionTemplateGeneratorForm.value);
