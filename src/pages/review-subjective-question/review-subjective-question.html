@@ -1,21 +1,97 @@
 <!--
-  Generated template for the ReviewSubjectiveQuestionPage page.
+  Generated template for the ReviewObjectiveQuestionPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-  <ion-navbar>
-      <button ion-button menuToggle>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Review Subjective Question</ion-title>
-  </ion-navbar>
+        <ion-title>Review Objective Question</ion-title>
+      </ion-navbar>
+    
 
 </ion-header>
 
 
 <ion-content padding>
+  <form [formGroup]="reviewQuestionsForm " *ngIf="formShow">
+    <ion-item id="select-item">
+      <ion-label color="dark">Question Sub-Type*</ion-label>
+        <ion-select formControlName="inpQSubType" (ionChange)="getAllClass()">
+          <ion-option *ngFor="let item of qSubType" [value]="item.qst_id">{{item.qst_name}}</ion-option>   
+        </ion-select>
+        </ion-item>
   
+        <ion-item id="select-item">
+          <ion-label color="dark">Class*</ion-label>
+          <ion-select formControlName="inpClass" (ionChange)="getSubject($event)">
+            <ion-option *ngFor="let cls of class" [value]="cls.class_id">{{cls.class_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item id="select-item">
+          <ion-label color="dark">Subject*</ion-label>
+          <ion-select formControlName="inpSubject" (ionChange)="getTopic($event)">
+            <ion-option *ngFor="let sub of subject" [value]="sub.sub_id">{{sub.sub_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item id="select-item">
+          <ion-label color="dark">Topic*</ion-label>
+          <ion-select formControlName="inpTopic" (ionChange)="getSubTopic($event)">
+            <ion-option *ngFor="let top of topic" [value]="top.topic_id">{{top.topic_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item id="select-item">
+          <ion-label color="dark">Sub-Topic*</ion-label>
+          <ion-select formControlName="inpSubTopic">
+            <ion-option *ngFor="let s_top of sub_topic" [value]="s_top.st_id">{{s_top.st_name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      
+      <button ion-button type="submit" (click)="logForm(); hideForm(); getAllMCQReviewQuestions();">Apply</button>
+  </form>
+  <div class="form-show-button" *ngIf="btnShow">
+    <button ion-button (click)="showForm()">
+      Show Form
+    </button>
+  </div>
+  
+  <div class="subjective-result" *ngIf="subjective">
+      <ion-card *ngFor="let ques of questions; let i = index;" class="card">
+          <ion-toolbar class="card-header">
+              <span class="card-title">Q No.: {{i + 1}}</span> 
+              <ion-buttons end>
+                <button  ion-button icon-end >
+                  <ion-icon class="icon" name="thumbs-down"></ion-icon>
+                </button>
+                <button ion-button icon-end (click)="openModal(ques.qus_id)">
+                  <ion-icon class="icon" name="eye" ></ion-icon>
+                </button>
+              </ion-buttons>
+          </ion-toolbar>
+          
+          <ion-row class="question">
+            <strong><span class="card-text-1" >Question :</span></strong>
+          </ion-row>
+
+          <ion-row>
+            <span class="card-text-2"><div [innerHTML]="ques.qus_name"></div></span>
+          </ion-row>
+         
+          <br>
+         
+          <ion-row class="answer">
+            <strong><span class="card-text-1">Answer :</span></strong>
+          </ion-row>
+
+          <ion-row>
+              <span class="card-text-2"><div [innerHTML]="ques.qopt_answer"></div></span>
+            <!--ion-input class="card-text-2" type="text" max-length="50" readOnly>{{ques.qopt_answer}}</ion-input-->
+          </ion-row>
+          </ion-card>
+    </div>
 </ion-content>

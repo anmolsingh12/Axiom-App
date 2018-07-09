@@ -1,22 +1,20 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import {DataServiceProvider} from '../../providers/data-service/data-service';
-
-/**
- * Generated class for the ModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
-  selector: 'page-modal',
-  templateUrl: 'modal.html',
-  
+  selector: 'page-review-modal',
+  templateUrl: 'review-modal.html',
 })
-export class ModalPage {
+export class ReviewModalPage {
+
+  constructor( public navParams: NavParams,
+    public viewCtrl: ViewController,
+    public platform: Platform,
+    public actionsheetCtrl: ActionSheetController,
+     private dataService:DataServiceProvider) {
+  }
 
   ques_id:any;
   questionData:any[];
@@ -28,15 +26,6 @@ export class ModalPage {
 
   subjective:boolean = false;
   objective:boolean = false;
-
-
-  constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-     public viewCtrl: ViewController,
-     public platform: Platform,
-     public actionsheetCtrl: ActionSheetController,
-      private dataService:DataServiceProvider ) {
-  }
 
   ionViewDidLoad() {
     this.ques_id = this.navParams.get('data');
@@ -67,7 +56,7 @@ export class ModalPage {
     this.checkQType();
     let qId = this.ques_id.qId;
     let qTypeId = this.ques_id.qTypeId;
-    this.dataService.getQuestionByQID(qTypeId, qId).subscribe(
+    this.dataService.getReviewQuestionByQID(qTypeId, qId).subscribe(
        result => {
           if (result.status === "ok") {
               this.questionData = result.data;
@@ -116,4 +105,5 @@ export class ModalPage {
     });
     actionSheet.present();
   }
+
 }

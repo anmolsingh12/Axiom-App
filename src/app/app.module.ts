@@ -8,6 +8,7 @@ import {AddQuestionPage} from '../pages/add-question/add-question';
 import {QuestionBankPage} from '../pages/question-bank/question-bank';
 import {BulkUploadPage} from '../pages/bulk-upload/bulk-upload'
 import {ModalPage} from '../pages/modal/modal';
+import {ReviewModalPage} from '../pages/review-modal/review-modal';
 import { ReviewAddedQuestionsPage } from '../pages/review-added-questions/review-added-questions';
 import { ReviewObjectiveQuestionPage } from '../pages/review-objective-question/review-objective-question'
 import { ReviewSubjectiveQuestionPage } from '../pages/review-subjective-question/review-subjective-question'
@@ -32,6 +33,7 @@ import { HttpModule } from '@angular/http';
     QuestionBankPage,
     BulkUploadPage,
     ModalPage,
+    ReviewModalPage,
     ReviewAddedQuestionsPage,
     ReviewObjectiveQuestionPage,
     ReviewSubjectiveQuestionPage,
@@ -41,7 +43,7 @@ import { HttpModule } from '@angular/http';
     IonicModule.forRoot(MyApp),
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    HttpModule
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,6 +54,7 @@ import { HttpModule } from '@angular/http';
     PopoverComponent,
     BulkUploadPage,
     ModalPage,
+    ReviewModalPage,
     ReviewAddedQuestionsPage,
     ReviewObjectiveQuestionPage,
     ReviewSubjectiveQuestionPage

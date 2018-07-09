@@ -52,12 +52,12 @@
             <ion-option *ngFor="let s_top of sub_topic" [value]="s_top.st_id">{{s_top.st_name}}</ion-option>
           </ion-select>
         </ion-item>
-      <button ion-button type="submit" (click)="logForm(); hideForm(); getAllQuestions();">Apply</button>
+      <button ion-button type="submit" (click)="logForm(); hideForm(); getAllQuestions(); checkQType()">Apply</button>
       <button ion-button color="danger" type=reset >Reset</button>
     </form>
   </div>  
     
-  <div class="show-button" *ngIf="!(questionEntry)"><button ion-button (click)="showForm()">Show Form</button></div> 
+  <div class="show-button" *ngIf="!(questionEntry)"><button ion-button (click)="showForm();">Show Form</button></div> 
 
   <div class="filter">
       <ion-item id="select-item"> 
@@ -66,35 +66,73 @@
       </ion-item> 
   
   
-  <div class="result" *ngIf="check_form_fill">
-      <ion-card *ngFor="let ques of questions" class="card">
+  <div class="subjective-result" *ngIf="subjective">
+      <ion-card *ngFor="let ques of questions; let i = index;" class="card">
           <ion-toolbar class="card-header">
-              <span class="card-title">Q No.: {{ques.qus_id}}</span> 
+              <span class="card-title">Q No.: {{i + 1}}</span> 
               <ion-buttons end>
                 <button  ion-button icon-end >
                   <ion-icon class="icon" name="thumbs-down"></ion-icon>
                 </button>
-                <button ion-button icon-end (click)="openModal(ques.num)">
+                <button ion-button icon-end (click)="openModal(ques.qus_id)">
                   <ion-icon class="icon" name="eye" ></ion-icon>
                 </button>
               </ion-buttons>
           </ion-toolbar>
+          
           <ion-row class="question">
             <strong><span class="card-text-1" >Question :</span></strong>
+          </ion-row>
+
+          <ion-row>
             <span class="card-text-2"><div [innerHTML]="ques.qus_name"></div></span>
           </ion-row>
+         
           <br>
+         
           <ion-row class="answer">
             <strong><span class="card-text-1">Answer :</span></strong>
-            <span class="card-text-2">{{ques.qopt_answer}}</span>
-            </ion-row>
-            <!--ion-row class="answer">
-                <ion-item>
-                    <ion-label>Select Question</ion-label>
-                    <ion-checkbox #selectQuestion></ion-checkbox>
-                  </ion-item>
-            </ion-row-->  
+          </ion-row>
+
+          <ion-row>
+              <span class="card-text-2"><div [innerHTML]="ques.qopt_answer"></div></span>
+            <!--ion-input class="card-text-2" type="text" max-length="50" readOnly>{{ques.qopt_answer}}</ion-input-->
+          </ion-row>
           </ion-card>
       </div>
     </div>
+
+    <div class="objective-result" *ngIf="objective">
+        <ion-card *ngFor="let ques of questions; let i = index;" class="card">
+            <ion-toolbar class="card-header">
+                <span class="card-title">Q No.: {{i + 1}}</span> 
+                <ion-buttons end>
+                  <button  ion-button icon-end >
+                    <ion-icon class="icon" name="thumbs-down"></ion-icon>
+                  </button>
+                  <button ion-button icon-end (click)="openModal(ques.qus_id)">
+                    <ion-icon class="icon" name="eye" ></ion-icon>
+                  </button>
+                </ion-buttons>
+            </ion-toolbar>
+            
+            <ion-row class="question">
+              <strong><span class="card-text-1" >Question :</span></strong>
+            </ion-row>
+  
+            <ion-row>
+              <span class="card-text-2"><div [innerHTML]="ques.qus_name"></div></span>
+            </ion-row>
+           
+            <br>
+           
+            <ion-row class="answer">
+              <strong><span class="card-text-1">Options :</span></strong>
+            </ion-row>
+  
+            <ion-row *ngFor="let opt of ques.options">
+                <span class="card-text-2"><div [innerHTML]="opt.qopt_options"></div></span>
+            </ion-row>
+            </ion-card>
+      </div>
 </ion-content>

@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
-/**
- * Generated class for the ReviewObjectiveQuestionPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import {DataServiceProvider} from '../../providers/data-service/data-service';
+import { ReviewModalPage } from '../review-modal/review-modal';
+import { ModalController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-review-objective-question',
@@ -30,8 +26,9 @@ export class ReviewObjectiveQuestionPage {
   formShow:boolean = true;
   btnShow:boolean = false;
   checkMCQ:boolean = false;
+  objective:boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController,public modalCtrl: ModalController, public navParams: NavParams, private formBuilder: FormBuilder, private dataService:DataServiceProvider) {
 
     this.reviewQuestionsForm = this.formBuilder.group(
       {
@@ -42,81 +39,132 @@ export class ReviewObjectiveQuestionPage {
         inpSubTopic:['']
       });
     
-    this.qSubType = [{name:'MCQ Single Response'},
-    {name:'MCQ Multiple Response'},
-    {name:'True/False'},
-    {name:'Match The Followings'},
-    {name:'Matrix Match'}];
+  }
+
+  getAllClass():void
+  {
+    this.dataService.getClass().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.class = result.data;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  getSubject(classId:any)
+  {
+    this.dataService.getSubjectByClass(classId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.subject = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getTopic(subId:any)
+  {
+    let classId:any;      
+    for(let cls of this.class)
+    {
+      if(this.reviewQuestionsForm.value.inpClass == cls.class_name)
+      {
+        classId = cls.class_id;
+      }
+    }
+    this.dataService.getTopicByClassSubject(classId, subId)
+    .subscribe(
+        result => {
+          if (result.status === "ok") {
+            this.topic = result.data;
+          }
+        },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getSubTopic(topId:any)
+  {
+    this.dataService.getSubtopicByTopic(topId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.sub_topic = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQuestionType()
+  {
+    this.dataService.getQType().subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getQSubType(qId:any)
+  {
+    this.dataService.getQuestionSubtypeDataByQuestiontype(qId).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.qSubType = result.data;
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
+  }
+
+  getAllMCQReviewQuestions()
+  {
+    let qt_id:string = "2";
+    let class_id:string = this.reviewQuestionsForm.value.inpClass;
+    let q_st_id:string = this.reviewQuestionsForm.value.inpQSubType;
+    let st_id:string = this.reviewQuestionsForm.value.inpSubTopic;
+    let sub_id:string = this.reviewQuestionsForm.value.inpSubject;
+    let top_id:string = this.reviewQuestionsForm.value.inpTopic;
     
-    this.class = [{name:'I', value:'1'},
-                  {name:'II', value:'2'},
-                  {name:'III', value:'3'},
-                  {name:'IV', value:'4'},
-                  {name:'V', value:'5'},
-                  {name:'VI', value:'6'},
-                  {name:'VII', value:'7'},
-                  {name:'VIII', value:'8'},
-                  {name:'IX', value:'9'},
-                  {name:'X', value:'10'},
-                  {name:'XI', value:'11'},
-                  {name:'XII', value:'12'}];
-    
-    this.subject = [{name:'Subject 1'}, {name : 'Subject 2'}, {name : 'Subject 3'}, {name : 'Subject 4'}];
-
-    this.topic = [{name:'Topic 1'}, {name : 'Topic 2'}, {name : 'Topic 3'}, {name : 'Topic 4'}];
-
-    this.sub_topic = [{name:'Sub-Topic 1'}, {name : 'Sub-Topic 2'}, {name : 'Sub-Topic 3'}, {name : 'Sub-Topic 4'}];
-
-    this.singleMCQQuestions = [{num:1, question:'Apple is a :', options:[
-                                                                {
-                                                                  num:'A',
-                                                                  value:'Vegetable'
-                                                                },
-                                                                {
-                                                                  num:'B',
-                                                                  value:'Fruit'
-                                                                },
-                                                                {
-                                                                  num:'C',
-                                                                  value:'Rock'
-                                                                },
-                                                                {
-                                                                  num:'D',
-                                                                  value:'None of The Above'
-                                                                }
-                                                              ]
-                                , correctOption:'B'},
-
-                                {num:2, question:'Every computer connected to the Internet is identified by a unique four-part string, known as :',
-                                                               options:[
-                                                              {
-                                                                num:'A',
-                                                                value:'IP address'
-                                                              },
-                                                              {
-                                                                num:'B',
-                                                                value:'Host name'
-                                                              },
-                                                              {
-                                                                num:'C',
-                                                                value:'Domain name'
-                                                              },
-                                                              {
-                                                                num:'D',
-                                                                value:'None of The Above'
-                                                              }
-                                                            ]
-                                , correctOption:'A'}
-                            ]
+    this.dataService.getReviewQuestions(qt_id, class_id, q_st_id, st_id, sub_id, top_id).subscribe(
+      result => {
+        if (result.status === "ok") {
+          this.questions = result.data;
+          console.log(this.questions);
+        }
+      },
+    error => {
+      console.log(error);
+    }
+  );
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReviewObjectiveQuestionPage');
+    this.getQSubType("2")
   }
 
   logForm()
   {
-    console.log(this.reviewQuestionsForm.value)
+    console.log(this.reviewQuestionsForm.value);
+    this.objective = true;
   }
 
   hideForm()
@@ -130,14 +178,12 @@ export class ReviewObjectiveQuestionPage {
     this.btnShow = false;
   }
 
-  selectDiv()
-  {
-    console.log(this.reviewQuestionsForm.value.inpQSubType);
-    if (this.reviewQuestionsForm.value.inpQSubType == "MCQ Single Response")
-    {
-      this.checkMCQ = true;
-    }
+  openModal(num:any) {
+    const modalData = {qTypeId:"2", qId:num};
+    let modal = this.modalCtrl.create(ReviewModalPage, {data:modalData});
+    modal.present();
   }
+
 }
 
 export interface options

@@ -105,15 +105,52 @@ export class DataServiceProvider {
       return this.http.get(url, opts ).map((response: Response) => response.json(), err => console.log(err)); 
   }
 
-  getQuestions(qTypeId:string)
+  getQuestions(qTypeId:string, classId:string, qSubTypeId:string, subTopicId:string, subId:string, topId:string)
   {
-    let st = 1;
+    console.log(qTypeId+" "+classId+" "+qSubTypeId+" "+subTopicId+" "+subId+" "+topId)
+    let st = "1";
     let headers = new Headers();
       headers.append('Prefix','inuat');
       headers.append('LoginId','1001');
       let opts = new RequestOptions({ headers: headers});
       let url = 'http://acmaster.simplysaid.in/api/question/getQuestion';
-      return this.http.post(url,{ qt_id: qTypeId, status: st }, opts ).map((response: Response) => response.json(), err => console.log(err));
+      return this.http.post(url,{ status: st, class_id:classId,qst_id:qSubTypeId,st_id:subTopicId,sub_id:subId,topic_id:topId}, opts ).map((response: Response) => response.json(), err => console.log(err));
+  }
+
+  getQuestionByQID(qTypeId:string, qId:string)
+  {
+    console.log(qTypeId+" "+qId);
+    let st = "1";
+    let headers = new Headers();
+      headers.append('Prefix','inuat');
+      headers.append('LoginId','1001');
+      let opts = new RequestOptions({ headers: headers});
+      let url = 'http://acmaster.simplysaid.in/api/question/getQuestion';
+      return this.http.post(url,{qt_id:qTypeId,status:st, qus_id:qId}, opts ).map((response: Response) => response.json(), err => console.log(err));
+  }
+
+  getReviewQuestionByQID(qTypeId:string, qId:string)
+  {
+    console.log(qTypeId+" "+qId);
+    let st = "0";
+    let headers = new Headers();
+      headers.append('Prefix','inuat');
+      headers.append('LoginId','1001');
+      let opts = new RequestOptions({ headers: headers});
+      let url = 'http://acmaster.simplysaid.in/api/question/getQuestion';
+      return this.http.post(url,{qt_id:qTypeId,status:st, qus_id:qId}, opts ).map((response: Response) => response.json(), err => console.log(err));
+  }
+
+  getReviewQuestions(qTypeId:string, classId:string, qSubTypeId:string, subTopicId:string, subId:string, topId:string)
+  {
+    console.log(qTypeId+" "+classId+" "+qSubTypeId+" "+subTopicId+" "+subId+" "+topId)
+    let st = "0";
+    let headers = new Headers();
+      headers.append('Prefix','inuat');
+      headers.append('LoginId','1001');
+      let opts = new RequestOptions({ headers: headers});
+      let url = 'http://acmaster.simplysaid.in/api/question/getQuestion';
+      return this.http.post(url,{ status: st, class_id:classId,qst_id:qSubTypeId,st_id:subTopicId,sub_id:subId,topic_id:topId}, opts ).map((response: Response) => response.json(), err => console.log(err));
   }
 
   generateExcelFile( board_id, class_id, sub_id, topic_id, st_id, qt_id, qst_id, skill_id, dl_id)

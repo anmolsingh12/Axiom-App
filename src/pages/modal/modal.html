@@ -19,67 +19,60 @@
 </ion-header>
 
 
-<ion-content padding>
- <ion-grid class="all-details">
-   <ion-row>
-     <ion-col col-4>
-       <ion-item>Question :</ion-item> 
-     </ion-col>
+<ion-content padding >
+ 
+ <div class="subjective" *ngIf="subjective">
+   <ion-grid class="all-details" *ngFor="let ques of questionData">
 
-     <ion-col col-8>
-       <ion-item>Question will be displayed here</ion-item>
-     </ion-col>
-   </ion-row>
+  <ion-row>
+    <ion-item><strong>Question :</strong></ion-item>
+  </ion-row>
 
-   <ion-row>
-    <ion-col col-4>
-      <ion-item>Answer :</ion-item> 
-    </ion-col>
+  <ion-row>
+    <label class="ques-ans" [innerHtml]="ques.qus_name"></label>
+  </ion-row>
 
-    <ion-col col-8>
-      <ion-item>Answer will be displayed here</ion-item>
-    </ion-col>
-   </ion-row>
+  <ion-row>
+    <ion-item><strong>Answer :</strong></ion-item>
+  </ion-row>
+  
+  <ion-row>
+      <label class="ques-ans"[innerHtml]="ques.qopt_answer"></label>
+  </ion-row>
+    
+  <ion-row>
+    <ion-item><strong>Topic :</strong>{{ques.topic_name}}</ion-item>
+  </ion-row>
+    
+  <ion-row>
+    <ion-item><strong>Question Sub Topic :</strong>{{ques.st_name}}</ion-item>
+  </ion-row>
+   
+  <ion-row>
+      <ion-item><strong>Details :</strong></ion-item>
+    </ion-row>
+    <ion-row >
+      <ion-item><strong>Subject </strong> : {{ques.sub_name}}</ion-item>
+    </ion-row>
 
-   <ion-row>
-    <ion-col col-4>
-      <ion-item>Class :</ion-item> 
-    </ion-col>
+    <ion-row >
+        <ion-item><strong>Marks </strong> :{{ques.qus_marks}}</ion-item>
+    </ion-row>
+  
+    <ion-row >
+      <ion-item><strong>Time </strong> :{{ques.qus_time_alloted}}</ion-item>
+    </ion-row>
 
-    <ion-col col-8>
-      <ion-item>Class will be displayed here</ion-item>
-    </ion-col>
-   </ion-row>
+    <ion-row >
+      <ion-item><strong>Negative Marks </strong> :{{ques.qus_negative_marks}}</ion-item>
+    </ion-row>
 
-   <ion-row>
-    <ion-col col-4>
-      <ion-item>Topic :</ion-item> 
-    </ion-col>
+    <ion-row >
+        <ion-item><strong>Historical Reference </strong> :{{ques.qus_historical_reference}}</ion-item>
+    </ion-row>
+    
+  
 
-    <ion-col col-8>
-      <ion-item>Topic will be displayed here</ion-item>
-    </ion-col>
-   </ion-row>
-
-   <ion-row>
-    <ion-col col-4>
-      <ion-item>Sub Topic :</ion-item> 
-    </ion-col>
-
-    <ion-col col-8>
-      <ion-item>Sub Topic will be displayed here</ion-item>
-    </ion-col>
-   </ion-row>
-
-   <ion-row>
-    <ion-col col-4>
-      <ion-item>Details :</ion-item> 
-    </ion-col>
-
-    <ion-col col-8>
-      <ion-item>Details will be displayed here</ion-item>
-    </ion-col>
-   </ion-row>
 
    <ion-row>
       <ion-col col-12>
@@ -93,4 +86,83 @@
      </ion-col>
    </ion-row>
  </ion-grid>
+</div>
+
+
+<div class="objective" *ngIf="objective">
+    <ion-grid class="all-details" *ngFor="let ques of questionData">
+ 
+   <ion-row>
+     <ion-item><strong>Question :</strong></ion-item>
+   </ion-row>
+ 
+   <ion-row>
+     <label class="ques-ans" [innerHtml]="ques.qus_name"></label>
+   </ion-row>
+ 
+   <ion-row>
+     <ion-item><strong>Options :</strong></ion-item>
+   </ion-row>
+   <div class="row">
+    <div class="col-lg-12">
+   <ion-row *ngFor="let opt of ques.options; let i = index;">
+     <ion-col col-3 style="margin-top:5px;">
+        <p style="font-size:14px;">{{i+1}}</p>
+     </ion-col>
+     <ion-col col-9>
+       <label *ngIf="opt.qopt_answer==1" style="background-color: blue;color:white" class="ques-ans" [innerHtml]="opt.qopt_options"></label>
+       <label *ngIf="opt.qopt_answer==0" class="ques-ans" [innerHtml]="opt.qopt_options"></label>
+     </ion-col>
+    </ion-row>
+    </div>
+  </div>
+     
+   <ion-row>
+     <ion-item><strong>Topic :</strong>{{ques.topic_name}}</ion-item>
+   </ion-row>
+     
+   <ion-row>
+     <ion-item><strong>Question Sub Topic :</strong>{{ques.st_name}}</ion-item>
+   </ion-row>
+    
+   <ion-row>
+       <ion-item><strong>Details :</strong></ion-item>
+     </ion-row>
+     <ion-row >
+       <ion-item><strong>Subject </strong> : {{ques.sub_name}}</ion-item>
+     </ion-row>
+ 
+     <ion-row >
+         <ion-item><strong>Marks </strong> :{{ques.qus_marks}}</ion-item>
+     </ion-row>
+   
+     <ion-row >
+       <ion-item><strong>Time </strong> :{{ques.qus_time_alloted}}</ion-item>
+     </ion-row>
+ 
+     <ion-row >
+       <ion-item><strong>Negative Marks </strong> :{{ques.qus_negative_marks}}</ion-item>
+     </ion-row>
+ 
+     <ion-row >
+         <ion-item><strong>Historical Reference </strong> :{{ques.qus_historical_reference}}</ion-item>
+     </ion-row>
+     
+   
+ 
+ 
+    <ion-row>
+       <ion-col col-12>
+           <button ion-button text-center block (click)="openMenu()">
+               Actions
+             </button>
+       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ </div>
+ 
 </ion-content>

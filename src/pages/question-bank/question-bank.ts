@@ -28,10 +28,13 @@ export class QuestionBankPage {
   questions:any[];
   questionEntry:boolean = true;
 
-  check_form_fill:boolean=false;
+  subjective:boolean = false;
+  objective:boolean = false;
 
 
   private quesBankDetails:FormGroup;
+
+ 
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -48,6 +51,21 @@ export class QuestionBankPage {
         inpTopic:[''],
         inpSubTopic:['']
       });
+  }
+
+  checkQType()
+  {
+    if( this.quesBankDetails.value.inpQType == "1")
+    {
+      this.subjective = true;
+      this.objective = false;
+    }
+
+    else if( this.quesBankDetails.value.inpQType == "2")
+    {
+      this.objective = true;
+      this.subjective = false;
+    }
   }
 
   getAllClass():void
@@ -145,10 +163,14 @@ export class QuestionBankPage {
 
   getAllQuestions()
   {
-    let status:string="ok";
     let qt_id:string = this.quesBankDetails.value.inpQType;
-
-    this.dataService.getQuestions(qt_id).subscribe(
+    let class_id:string = this.quesBankDetails.value.inpClass;
+    let q_st_id:string = this.quesBankDetails.value.inpQSubType;
+    let st_id:string = this.quesBankDetails.value.inpSubTopic;
+    let sub_id:string = this.quesBankDetails.value.inpSubject;
+    let top_id:string = this.quesBankDetails.value.inpTopic;
+    
+    this.dataService.getQuestions(qt_id, class_id, q_st_id, st_id, sub_id, top_id).subscribe(
       result => {
         if (result.status === "ok") {
           this.questions = result.data;
@@ -161,15 +183,14 @@ export class QuestionBankPage {
   }
 
   openModal(num:any) {
-    console.log(num);
-    let modal = this.modalCtrl.create(ModalPage);
+    const modalData = {qTypeId:this.quesBankDetails.value.inpQType, qId:num};
+    let modal = this.modalCtrl.create(ModalPage, {data:modalData});
     modal.present();
   }
 
   logForm()
   {
     console.log(this.quesBankDetails.value);
-    this.check_form_fill = true;
   }
 
   hideForm()

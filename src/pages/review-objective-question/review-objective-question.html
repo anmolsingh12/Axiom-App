@@ -21,7 +21,7 @@
   <form [formGroup]="reviewQuestionsForm" *ngIf="formShow">
     <ion-item id="select-item">
       <ion-label color="dark">Question Sub-Type*</ion-label>
-        <ion-select formControlName="inpQSubType">
+        <ion-select formControlName="inpQSubType" (ionChange)="getAllClass()">
           <ion-option *ngFor="let item of qSubType" [value]="item.qst_id">{{item.qst_name}}</ion-option>   
         </ion-select>
         </ion-item>
@@ -52,52 +52,43 @@
           </ion-select>
         </ion-item>
       
-      <button ion-button type="submit" (click)="logForm();selectDiv(); hideForm()">Apply</button>
+      <button ion-button type="submit" (click)="logForm(); hideForm(); getAllMCQReviewQuestions();">Apply</button>
   </form>
   <div class="form-show-button" *ngIf="btnShow">
     <button ion-button (click)="showForm()">
       Show Form
     </button>
   </div>
-  <div class="single-mcq-questions" *ngIf="checkMCQ">
-      <ion-card *ngFor="let ques of singleMCQQuestions" class="card">
+  
+  <div class="objective-result" *ngIf="objective">
+      <ion-card *ngFor="let ques of questions; let i = index;" class="card">
           <ion-toolbar class="card-header">
-              <span class="card-title">Q No.: {{ques.num}}</span> 
+              <span class="card-title">Q No.: {{i + 1}}</span> 
               <ion-buttons end>
-                <button  ion-button icon-end >
-                  <ion-icon class="icon" name="thumbs-up"></ion-icon>
+                <button ion-button icon-end (click)="openModal(ques.qus_id)">
+                  <ion-icon class="icon" name="eye" ></ion-icon>
                 </button>
                 
-                <button ion-button icon-end (click)="openModal(ques.num)">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>
-                
-                <button ion-button icon-end (click)="openModal(ques.num)">
-                    <ion-icon class="icon" name="eye" ></ion-icon>
-                </button>
-
               </ion-buttons>
           </ion-toolbar>
+          
           <ion-row class="question">
-              <ion-col col-4>
-                  <strong><span class="card-text-1" >Question :</span></strong>
-                </ion-col>
-                
-                <ion-col col-8>
-                  <span class="card-text-2">{{ques.question}}</span>
-                </ion-col>
+            <strong><span class="card-text-1" >Question :</span></strong>
           </ion-row>
+
+          <ion-row>
+            <span class="card-text-2"><div [innerHTML]="ques.qus_name"></div></span>
+          </ion-row>
+         
           <br>
-          <ion-row class="options">
-              <strong><span class="card-text-1">Options :</span></strong>
-            <div class="answer">
-              <ion-row *ngFor="let opt of ques.options">
-                <ion-col><!--*ngIf="(opt.num == opt.correctOption)"-->
-                  <ion-item>{{opt.num}}&nbsp;{{opt.value}}</ion-item>
-                </ion-col>
-              </ion-row>
-              </div>
+         
+          <ion-row class="answer">
+            <strong><span class="card-text-1">Options :</span></strong>
           </ion-row>
-    </ion-card>
-  </div>
+
+          <ion-row *ngFor="let opt of ques.options">
+              <span class="card-text-2"><div [innerHTML]="opt.qopt_options"></div></span>
+          </ion-row>
+          </ion-card>
+    </div>
 </ion-content>

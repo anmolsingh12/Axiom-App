@@ -46,6 +46,7 @@ page-question-bank {
     }
     .questions{
         font-size: 16px;
+        padding:5px;
     }
 
     .card
@@ -65,11 +66,13 @@ page-question-bank {
     .card-text-2
     {
         font-size:15px;
+        padding-left:15px; 
     }
 
     .answer
     {
         margin-bottom: 10px;
+        padding:4px;
     }
 
     #select-item
