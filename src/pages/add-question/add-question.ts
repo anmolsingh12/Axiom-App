@@ -469,7 +469,7 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;
     }
 
-    else if(val == "MCQ Single Response")
+    else if(val == "1")
     {
       this.checkMcqSingle = true;
       this.checkVLA = false;
@@ -485,7 +485,7 @@ export class AddQuestionPage
       this.checkMcqMultiple = false;
     }
 
-    else if(val == "MCQ Multiple Response")
+    else if(val == "2")
     {
       this.checkMcqMultiple = true;
       this.checkMcqSingle = false;
@@ -500,7 +500,7 @@ export class AddQuestionPage
       this.checkMatch = false;
       this.checkTF = false;
     }
-    else if(val == "True/False")
+    else if(val == "3")
     {
       this.checkTF = true;
       this.checkMcqMultiple = false;
@@ -515,7 +515,7 @@ export class AddQuestionPage
       this.checkIdentify = false;
       this.checkSA = false;
     }
-    else if (val == "Match The Followings")
+    else if (val == "4")
     {
       this.checkMatch = true;
       this.checkTF = false;
@@ -531,7 +531,7 @@ export class AddQuestionPage
       this.checkSA = false;
     }
 
-    else if(val=="Matrix Match")
+    else if(val=="5")
     {
       this.checkMatrix = true;
       this.checkMatch = false;

@@ -10,7 +10,7 @@
         <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Review Objective Question</ion-title>
+        <ion-title>Review Subjective Question</ion-title>
       </ion-navbar>
     
 
@@ -21,33 +21,33 @@
   <form [formGroup]="reviewQuestionsForm " *ngIf="formShow">
     <ion-item id="select-item">
       <ion-label color="dark">Question Sub-Type*</ion-label>
-        <ion-select formControlName="inpQSubType" (ionChange)="getAllClass()">
+        <ion-select interface="action-sheet" formControlName="inpQSubType" (ionChange)="getAllClass()">
           <ion-option *ngFor="let item of qSubType" [value]="item.qst_id">{{item.qst_name}}</ion-option>   
         </ion-select>
         </ion-item>
   
         <ion-item id="select-item">
           <ion-label color="dark">Class*</ion-label>
-          <ion-select formControlName="inpClass" (ionChange)="getSubject($event)">
+          <ion-select interface="action-sheet" formControlName="inpClass" (ionChange)="getSubject($event)">
             <ion-option *ngFor="let cls of class" [value]="cls.class_id">{{cls.class_name}}</ion-option>
           </ion-select>
         </ion-item>
         
         <ion-item id="select-item">
           <ion-label color="dark">Subject*</ion-label>
-          <ion-select formControlName="inpSubject" (ionChange)="getTopic($event)">
+          <ion-select interface="action-sheet" formControlName="inpSubject" (ionChange)="getTopic($event)">
             <ion-option *ngFor="let sub of subject" [value]="sub.sub_id">{{sub.sub_name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item id="select-item">
           <ion-label color="dark">Topic*</ion-label>
-          <ion-select formControlName="inpTopic" (ionChange)="getSubTopic($event)">
+          <ion-select interface="action-sheet" formControlName="inpTopic" (ionChange)="getSubTopic($event)">
             <ion-option *ngFor="let top of topic" [value]="top.topic_id">{{top.topic_name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item id="select-item">
           <ion-label color="dark">Sub-Topic*</ion-label>
-          <ion-select formControlName="inpSubTopic">
+          <ion-select interface="action-sheet" formControlName="inpSubTopic">
             <ion-option *ngFor="let s_top of sub_topic" [value]="s_top.st_id">{{s_top.st_name}}</ion-option>
           </ion-select>
         </ion-item>

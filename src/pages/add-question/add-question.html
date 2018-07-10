@@ -233,7 +233,7 @@
     <div *ngIf="checkMcqMultiple" class="details-div">
         <h5>Type Question:*</h5>
         <form >
-          <div class="ques"[froalaEditor] formControlName="question"></div>
+          <div class="ques"[froalaEditor] ></div>
           <ion-grid>
             <ion-list-header>
               <h3>MCQ(Multiple Response)</h3>
@@ -244,10 +244,10 @@
                     <ion-card class="option-card-div">
                       <ion-label class="option-title"><strong>A</strong></ion-label>
                       <hr class="option-radio-divider">
-                      <ion-checkbox item-left formControlName="correctAnswer.item1"></ion-checkbox>
+                      <ion-checkbox item-left></ion-checkbox>
                     </ion-card>
                   </ion-col>
-                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option1"></div></ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor] ></div></ion-col>
             </ion-row>
             
         
@@ -256,10 +256,10 @@
                   <ion-card class="option-card-div">
                     <ion-label class="option-title"><strong>B</strong></ion-label>
                     <hr class="option-radio-divider">
-                    <ion-checkbox item-left formControlName=""></ion-checkbox>
+                    <ion-checkbox item-left ></ion-checkbox>
                   </ion-card>
                 </ion-col>
-              <ion-col col-10><div class="ans" [froalaEditor] formControlName="option2" ></div></ion-col>
+              <ion-col col-10><div class="ans" [froalaEditor]  ></div></ion-col>
             </ion-row>
     
             <ion-row>
@@ -270,7 +270,7 @@
                       <ion-checkbox item-left></ion-checkbox>
                     </ion-card>
                   </ion-col>
-                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option3" ></div></ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor]  ></div></ion-col>
               </ion-row>
         
             <ion-row>
@@ -281,7 +281,7 @@
                       <ion-checkbox item-left ></ion-checkbox>
                     </ion-card>
                   </ion-col>
-                <ion-col col-10><div class="ans" [froalaEditor] formControlName="option4"></div></ion-col>
+                <ion-col col-10><div class="ans" [froalaEditor] ></div></ion-col>
             </ion-row>
           </ion-grid>
         </form>
